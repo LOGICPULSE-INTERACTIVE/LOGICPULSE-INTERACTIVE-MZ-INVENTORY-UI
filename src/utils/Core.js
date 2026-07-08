@@ -2,6 +2,4 @@
 
 window.LOGICPULSE = window.LOGICPULSE || {};
 
-LOGICPULSE.Assets = {
-
-};
+LOGICPULSE.Core = {};
