@@ -16,7 +16,7 @@
  *
  * Edit the files inside /src instead.
  *
- * Build Date: 2026-07-09T00:52:02.510Z
+ * Build Date: 2026-07-09T01:18:00.409Z
  * ============================================================================
  */
 
@@ -348,6 +348,70 @@ LOGICPULSE.CraftManager = {};
 
 
 //=============================================================================
+// LPUIElement.js
+//=============================================================================
+
+window.LOGICPULSE = window.LOGICPULSE || {};
+LOGICPULSE.UI = LOGICPULSE.UI || {};
+
+//=============================================================================
+// Base UI Element
+//=============================================================================
+
+LOGICPULSE.UI.Element = class extends PIXI.Container {
+
+    constructor() {
+
+        super();
+
+        this._enabled = true;
+
+    }
+
+    show() {
+
+        this.visible = true;
+
+    }
+
+    hide() {
+
+        this.visible = false;
+
+    }
+
+    enable() {
+
+        this._enabled = true;
+
+    }
+
+    disable() {
+
+        this._enabled = false;
+
+    }
+
+    get enabled() {
+
+        return this._enabled;
+
+    }
+
+    refresh() {
+
+    }
+
+    destroy(options) {
+
+        super.destroy(options);
+
+    }
+
+};
+
+
+//=============================================================================
 // LPButton.js
 //=============================================================================
 
@@ -402,9 +466,70 @@ LOGICPULSE.UI.Grid = class {
 window.LOGICPULSE = window.LOGICPULSE || {};
 LOGICPULSE.UI = LOGICPULSE.UI || {};
 
-LOGICPULSE.UI.Sidebar = class {
+//=============================================================================
+// Sidebar
+//=============================================================================
+
+LOGICPULSE.UI.Sidebar = class extends LOGICPULSE.UI.Element {
 
     constructor() {
+
+        super();
+
+        this.create();
+
+    }
+
+    create() {
+
+        this.createBackground();
+
+        this.createTabs();
+
+    }
+
+    createBackground() {
+
+        this._background =
+            LOGICPULSE.Assets.createSprite(
+
+                LOGICPULSE.Assets.Folders.Sidebar,
+                "Sidebar box"
+
+            );
+
+        this.addChild(this._background);
+
+    }
+
+    createTabs() {
+
+        this._tabs = [];
+
+        const tabNames = [
+
+            "Consumable",
+            "Material",
+            "Key Materials",
+            "Synthesizer"
+
+        ];
+
+        for (const name of tabNames) {
+
+            const sprite =
+                LOGICPULSE.Assets.createSprite(
+
+                    LOGICPULSE.Assets.Folders.Sidebar,
+                    `Sidebar ${name} Tab Idle`
+
+                );
+
+            this._tabs.push(sprite);
+
+            this.addChild(sprite);
+
+        }
 
     }
 
@@ -451,6 +576,8 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         super.create();
 
         this.createBackground();
+        this.createSidebar();
+
 
     }
 
@@ -467,6 +594,14 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         background.y = 0;
 
         this.addChild(background);
+
+    }
+
+    createSidebar() {
+
+        this._sidebar = new LOGICPULSE.UI.Sidebar();
+
+        this.addChild(this._sidebar);
 
     }
 

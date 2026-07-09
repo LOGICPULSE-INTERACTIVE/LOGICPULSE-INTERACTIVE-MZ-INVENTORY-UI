@@ -20,6 +20,8 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         super.create();
 
         this.createBackground();
+        this.createSidebar();
+
 
     }
 
@@ -36,6 +38,14 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         background.y = 0;
 
         this.addChild(background);
+
+    }
+
+    createSidebar() {
+
+        this._sidebar = new LOGICPULSE.UI.Sidebar();
+
+        this.addChild(this._sidebar);
 
     }
 

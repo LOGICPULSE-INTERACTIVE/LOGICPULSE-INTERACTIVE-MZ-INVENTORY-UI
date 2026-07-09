@@ -19,6 +19,7 @@ module.exports = [
     "src/managers/LPCraftManager.js",
 
     // UI
+    "src/ui/LPUIElement.js",
     "src/ui/LPButton.js",
     "src/ui/LPCursor.js",
     "src/ui/LPGrid.js",
