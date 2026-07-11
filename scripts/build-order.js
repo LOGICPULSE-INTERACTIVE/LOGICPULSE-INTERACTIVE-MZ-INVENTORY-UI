@@ -18,6 +18,7 @@ module.exports = [
     "src/managers/LPGamePartyHooks.js",
     "src/managers/LPRecipeManager.js",
     "src/managers/LPCraftManager.js",
+    "src/managers/LPAnimator.js",
 
 
     // UI

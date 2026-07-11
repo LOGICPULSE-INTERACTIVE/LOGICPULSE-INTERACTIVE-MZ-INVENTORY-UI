@@ -48,7 +48,9 @@ LOGICPULSE.Assets = {
 
             ItemBoxRare: "Item Box Rare",
 
-            ItemBoxLegendary: "Item Box Legendary"
+            ItemBoxLegendary: "Item Box Legendary",
+
+            SelectionFrame: "Selection Frame",
 
         }),
 

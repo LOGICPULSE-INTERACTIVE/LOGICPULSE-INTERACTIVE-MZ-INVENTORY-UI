@@ -15,6 +15,9 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
 
         this._entry = options.entry || null;
 
+        this._focused = false;
+        this._locked = false;
+
         this.move(
 
             options.x ?? 0,
@@ -33,8 +36,10 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
     create() {
 
         this.createBackground();
-
         this.createIcon();
+        this.createSelectionFrame();
+
+        this.updateSelection();
 
     }
 
@@ -99,28 +104,20 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
     }
 
     //--------------------------------
-    // Center Icon
+    // Selection Frame
     //--------------------------------
 
-    centerIcon() {
+    createSelectionFrame() {
 
-        const slotSize = 92;
+        this._selectionFrame = this.createSprite(
 
-        const iconWidth = ImageManager.iconWidth;
+            LOGICPULSE.Assets.Folders.Inventory,
 
-        const iconHeight = ImageManager.iconHeight;
-
-        this._icon.x = Math.floor(
-
-            (slotSize - iconWidth) / 2
+            LOGICPULSE.Assets.Images.Inventory.SelectionFrame
 
         );
 
-        this._icon.y = Math.floor(
-
-            (slotSize - iconHeight) / 2
-
-        );
+        this._selectionFrame.visible = false;
 
     }
 
@@ -143,6 +140,114 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
             default:
 
                 return LOGICPULSE.Assets.Images.Inventory.ItemBoxCommon;
+
+        }
+
+    }
+
+    //--------------------------------
+    // Focus
+    //--------------------------------
+
+    setFocused(value) {
+
+        if (this._focused === value) {
+
+            return;
+
+        }
+
+        this._focused = value;
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Locked
+    //--------------------------------
+
+    setLocked(value) {
+
+        if (this._locked === value) {
+
+            return;
+
+        }
+
+        this._locked = value;
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Focused
+    //--------------------------------
+
+    focused() {
+
+        return this._focused;
+
+    }
+
+    //--------------------------------
+    // Locked
+    //--------------------------------
+
+    locked() {
+
+        return this._locked;
+
+    }
+
+    //--------------------------------
+    // Update Selection
+    //--------------------------------
+
+    updateSelection() {
+
+        if (!this._selectionFrame) {
+
+            return;
+
+        }
+
+        if (this._locked) {
+
+            this._selectionFrame.visible = true;
+
+            this._selectionFrame.alpha = 1.0;
+
+            LOGICPULSE.Animator.stop(
+
+                this._selectionFrame
+
+            );
+
+            return;
+
+        }
+
+        if (this._focused) {
+
+            this._selectionFrame.visible = true;
+
+            LOGICPULSE.Animator.pulse(
+
+                this._selectionFrame
+
+            );
+
+        } else {
+
+            this._selectionFrame.visible = false;
+
+            LOGICPULSE.Animator.stop(
+
+                this._selectionFrame
+
+            );
 
         }
 

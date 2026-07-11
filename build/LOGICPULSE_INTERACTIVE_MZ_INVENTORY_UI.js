@@ -16,7 +16,7 @@
  *
  * Edit the files inside /src instead.
  *
- * Build Date: 2026-07-10T14:28:02.272Z
+ * Build Date: 2026-07-10T20:19:03.407Z
  * ============================================================================
  */
 
@@ -146,7 +146,9 @@ LOGICPULSE.Assets = {
 
             ItemBoxRare: "Item Box Rare",
 
-            ItemBoxLegendary: "Item Box Legendary"
+            ItemBoxLegendary: "Item Box Legendary",
+
+            SelectionFrame: "Selection Frame",
 
         }),
 
@@ -949,6 +951,184 @@ LOGICPULSE.CraftManager = {};
 
 
 //=============================================================================
+// LPAnimator.js
+//=============================================================================
+
+window.LOGICPULSE = window.LOGICPULSE || {};
+
+//=============================================================================
+// Animator
+//=============================================================================
+
+LOGICPULSE.Animator = {
+
+    _animations: [],
+
+    //--------------------------------
+    // Update
+    //--------------------------------
+
+    update() {
+
+        for (const animation of this._animations) {
+
+            if (!animation.target || animation.target.destroyed) {
+
+                continue;
+
+            }
+
+            switch (animation.type) {
+
+                case "pulse":
+
+                    this.updatePulse(animation);
+
+                    break;
+
+            }
+
+        }
+
+    },
+
+    //--------------------------------
+    // Pulse
+    //--------------------------------
+
+    pulse(target, options = {}) {
+
+        if (!target) {
+
+            return;
+
+        }
+
+        const existing = this._animations.find(
+
+            animation =>
+
+                animation.target === target &&
+                animation.type === "pulse"
+
+        );
+
+        if (existing) {
+
+            return;
+
+        }
+
+        target.alpha = options.max ?? 1.0;
+
+        this._animations.push({
+
+            type: "pulse",
+
+            target: target,
+
+            min: options.min ?? 0.35,
+
+            max: options.max ?? 1.0,
+
+            speed: options.speed ?? 0.02,
+
+            direction: -1
+
+        });
+
+    },
+
+    //--------------------------------
+    // Stop
+    //--------------------------------
+
+    stop(target) {
+
+        this._animations = this._animations.filter(
+
+            animation => animation.target !== target
+
+        );
+
+        if (target) {
+
+            target.alpha = 1.0;
+
+        }
+
+    },
+
+    //--------------------------------
+    // Clear
+    //--------------------------------
+
+    clear() {
+
+        for (const animation of this._animations) {
+
+            if (animation.target) {
+
+                animation.target.alpha = 1.0;
+
+            }
+
+        }
+
+        this._animations = [];
+
+    },
+
+    //--------------------------------
+    // Pulse Update
+    //--------------------------------
+
+    updatePulse(animation) {
+
+        animation.target.alpha +=
+
+            animation.speed * animation.direction;
+
+        if (animation.target.alpha <= animation.min) {
+
+            animation.target.alpha = animation.min;
+
+            animation.direction = 1;
+
+        }
+
+        else if (animation.target.alpha >= animation.max) {
+
+            animation.target.alpha = animation.max;
+
+            animation.direction = -1;
+
+        }
+
+    }
+
+};
+
+//=============================================================================
+// Scene Hook
+//=============================================================================
+
+(() => {
+
+    const aliasUpdate = Scene_Base.prototype.update;
+
+    Scene_Base.prototype.update = function() {
+
+        aliasUpdate.call(this);
+
+        LOGICPULSE.Animator.update();
+
+    };
+
+})();
+
+
+//=============================================================================
 // LPUIElement.js
 //=============================================================================
 
@@ -1134,6 +1314,9 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
 
         this._entry = options.entry || null;
 
+        this._focused = false;
+        this._locked = false;
+
         this.move(
 
             options.x ?? 0,
@@ -1152,8 +1335,10 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
     create() {
 
         this.createBackground();
-
         this.createIcon();
+        this.createSelectionFrame();
+
+        this.updateSelection();
 
     }
 
@@ -1218,28 +1403,20 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
     }
 
     //--------------------------------
-    // Center Icon
+    // Selection Frame
     //--------------------------------
 
-    centerIcon() {
+    createSelectionFrame() {
 
-        const slotSize = 92;
+        this._selectionFrame = this.createSprite(
 
-        const iconWidth = ImageManager.iconWidth;
+            LOGICPULSE.Assets.Folders.Inventory,
 
-        const iconHeight = ImageManager.iconHeight;
-
-        this._icon.x = Math.floor(
-
-            (slotSize - iconWidth) / 2
+            LOGICPULSE.Assets.Images.Inventory.SelectionFrame
 
         );
 
-        this._icon.y = Math.floor(
-
-            (slotSize - iconHeight) / 2
-
-        );
+        this._selectionFrame.visible = false;
 
     }
 
@@ -1262,6 +1439,114 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
             default:
 
                 return LOGICPULSE.Assets.Images.Inventory.ItemBoxCommon;
+
+        }
+
+    }
+
+    //--------------------------------
+    // Focus
+    //--------------------------------
+
+    setFocused(value) {
+
+        if (this._focused === value) {
+
+            return;
+
+        }
+
+        this._focused = value;
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Locked
+    //--------------------------------
+
+    setLocked(value) {
+
+        if (this._locked === value) {
+
+            return;
+
+        }
+
+        this._locked = value;
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Focused
+    //--------------------------------
+
+    focused() {
+
+        return this._focused;
+
+    }
+
+    //--------------------------------
+    // Locked
+    //--------------------------------
+
+    locked() {
+
+        return this._locked;
+
+    }
+
+    //--------------------------------
+    // Update Selection
+    //--------------------------------
+
+    updateSelection() {
+
+        if (!this._selectionFrame) {
+
+            return;
+
+        }
+
+        if (this._locked) {
+
+            this._selectionFrame.visible = true;
+
+            this._selectionFrame.alpha = 1.0;
+
+            LOGICPULSE.Animator.stop(
+
+                this._selectionFrame
+
+            );
+
+            return;
+
+        }
+
+        if (this._focused) {
+
+            this._selectionFrame.visible = true;
+
+            LOGICPULSE.Animator.pulse(
+
+                this._selectionFrame
+
+            );
+
+        } else {
+
+            this._selectionFrame.visible = false;
+
+            LOGICPULSE.Animator.stop(
+
+                this._selectionFrame
+
+            );
 
         }
 
@@ -1340,8 +1625,11 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
         this._layout = layout;
 
         this._category =
-
             LOGICPULSE.Constants.Category.Consumable;
+
+        this._selectedIndex = 0;
+
+        this._slots = [];
 
         this.create();
 
@@ -1426,7 +1714,14 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
     buildGrid() {
 
         this.clearSlots();
+
         this.buildSlots();
+
+        this.setSelectedIndex(
+
+            this._selectedIndex
+
+        );
 
     }
 
@@ -1437,6 +1732,8 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
     clearSlots() {
 
         this._slotLayer.removeChildren();
+
+        this._slots = [];
 
     }
 
@@ -1452,19 +1749,19 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
             const position = this.slotPosition(index);
 
-            const entry = items[index];
-
             const slot = new LOGICPULSE.UI.GridSlot({
 
                 x: position.x,
 
                 y: position.y,
 
-                entry: entry
+                entry: items[index]
 
             });
 
             this._slotLayer.addChild(slot);
+
+            this._slots.push(slot);
 
         }
 
@@ -1508,6 +1805,8 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
         this._category = category;
 
+        this._selectedIndex = 0;
+
         this.buildGrid();
 
     }
@@ -1533,6 +1832,146 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
             this._category
 
         );
+
+    }
+
+    //--------------------------------
+    // Selected Index
+    //--------------------------------
+
+    selectedIndex() {
+
+        return this._selectedIndex;
+
+    }
+
+    //--------------------------------
+    // Set Selected Index
+    //--------------------------------
+
+    setSelectedIndex(index) {
+
+        const max = this.items().length - 1;
+
+        if (max < 0) {
+
+            this._selectedIndex = -1;
+
+            this.updateSelection();
+
+            return;
+
+        }
+
+        this._selectedIndex = Math.max(
+
+            0,
+
+            Math.min(index, max)
+
+        );
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Selected Entry
+    //--------------------------------
+
+    selectedEntry() {
+
+        if (this._selectedIndex < 0) {
+
+            return null;
+
+        }
+
+        return this.items()[this._selectedIndex] ?? null;
+
+    }
+
+    //--------------------------------
+    // Move Left
+    //--------------------------------
+
+    moveLeft() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex - 1
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Right
+    //--------------------------------
+
+    moveRight() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex + 1
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Up
+    //--------------------------------
+
+    moveUp() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex -
+
+            this._layout.columns
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Down
+    //--------------------------------
+
+    moveDown() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex +
+
+            this._layout.columns
+
+        );
+
+    }
+
+    //--------------------------------
+    // Update Selection
+    //--------------------------------
+
+    updateSelection() {
+
+        if (!this._slots) {
+
+            return;
+
+        }
+
+        for (let i = 0; i < this._slots.length; i++) {
+
+            this._slots[i].setFocused(
+
+                i === this._selectedIndex
+
+            );
+
+        }
 
     }
 
@@ -1759,6 +2198,76 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         );
 
         this.addChild(this._grid);
+
+    }
+
+    update() {
+
+        super.update();
+
+        this.updateGridInput();
+
+    }
+
+    //--------------------------------
+    // Grid Input
+    //--------------------------------
+
+    updateGridInput() {
+
+        if (Input.isRepeated("right")) {
+
+            this._grid.moveRight();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("left")) {
+
+            this._grid.moveLeft();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("down")) {
+
+            this._grid.moveDown();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("up")) {
+
+            this._grid.moveUp();
+
+            this.onSelectionChanged();
+
+        }
+
+    }
+
+    //--------------------------------
+    // Selection Changed
+    //--------------------------------
+
+    onSelectionChanged() {
+
+        const entry = this._grid.selectedEntry();
+
+        if (!entry) {
+
+            return;
+
+        }
+
+        console.log(
+
+            entry.item.name
+
+        );
 
     }
 

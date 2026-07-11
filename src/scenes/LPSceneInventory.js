@@ -72,4 +72,74 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
     }
 
+    update() {
+
+        super.update();
+
+        this.updateGridInput();
+
+    }
+
+    //--------------------------------
+    // Grid Input
+    //--------------------------------
+
+    updateGridInput() {
+
+        if (Input.isRepeated("right")) {
+
+            this._grid.moveRight();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("left")) {
+
+            this._grid.moveLeft();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("down")) {
+
+            this._grid.moveDown();
+
+            this.onSelectionChanged();
+
+        }
+
+        else if (Input.isRepeated("up")) {
+
+            this._grid.moveUp();
+
+            this.onSelectionChanged();
+
+        }
+
+    }
+
+    //--------------------------------
+    // Selection Changed
+    //--------------------------------
+
+    onSelectionChanged() {
+
+        const entry = this._grid.selectedEntry();
+
+        if (!entry) {
+
+            return;
+
+        }
+
+        console.log(
+
+            entry.item.name
+
+        );
+
+    }
+
 };

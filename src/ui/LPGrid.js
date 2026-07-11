@@ -16,8 +16,11 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
         this._layout = layout;
 
         this._category =
-
             LOGICPULSE.Constants.Category.Consumable;
+
+        this._selectedIndex = 0;
+
+        this._slots = [];
 
         this.create();
 
@@ -102,7 +105,14 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
     buildGrid() {
 
         this.clearSlots();
+
         this.buildSlots();
+
+        this.setSelectedIndex(
+
+            this._selectedIndex
+
+        );
 
     }
 
@@ -113,6 +123,8 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
     clearSlots() {
 
         this._slotLayer.removeChildren();
+
+        this._slots = [];
 
     }
 
@@ -128,19 +140,19 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
             const position = this.slotPosition(index);
 
-            const entry = items[index];
-
             const slot = new LOGICPULSE.UI.GridSlot({
 
                 x: position.x,
 
                 y: position.y,
 
-                entry: entry
+                entry: items[index]
 
             });
 
             this._slotLayer.addChild(slot);
+
+            this._slots.push(slot);
 
         }
 
@@ -184,6 +196,8 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
         this._category = category;
 
+        this._selectedIndex = 0;
+
         this.buildGrid();
 
     }
@@ -209,6 +223,146 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
             this._category
 
         );
+
+    }
+
+    //--------------------------------
+    // Selected Index
+    //--------------------------------
+
+    selectedIndex() {
+
+        return this._selectedIndex;
+
+    }
+
+    //--------------------------------
+    // Set Selected Index
+    //--------------------------------
+
+    setSelectedIndex(index) {
+
+        const max = this.items().length - 1;
+
+        if (max < 0) {
+
+            this._selectedIndex = -1;
+
+            this.updateSelection();
+
+            return;
+
+        }
+
+        this._selectedIndex = Math.max(
+
+            0,
+
+            Math.min(index, max)
+
+        );
+
+        this.updateSelection();
+
+    }
+
+    //--------------------------------
+    // Selected Entry
+    //--------------------------------
+
+    selectedEntry() {
+
+        if (this._selectedIndex < 0) {
+
+            return null;
+
+        }
+
+        return this.items()[this._selectedIndex] ?? null;
+
+    }
+
+    //--------------------------------
+    // Move Left
+    //--------------------------------
+
+    moveLeft() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex - 1
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Right
+    //--------------------------------
+
+    moveRight() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex + 1
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Up
+    //--------------------------------
+
+    moveUp() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex -
+
+            this._layout.columns
+
+        );
+
+    }
+
+    //--------------------------------
+    // Move Down
+    //--------------------------------
+
+    moveDown() {
+
+        this.setSelectedIndex(
+
+            this._selectedIndex +
+
+            this._layout.columns
+
+        );
+
+    }
+
+    //--------------------------------
+    // Update Selection
+    //--------------------------------
+
+    updateSelection() {
+
+        if (!this._slots) {
+
+            return;
+
+        }
+
+        for (let i = 0; i < this._slots.length; i++) {
+
+            this._slots[i].setFocused(
+
+                i === this._selectedIndex
+
+            );
+
+        }
 
     }
 
