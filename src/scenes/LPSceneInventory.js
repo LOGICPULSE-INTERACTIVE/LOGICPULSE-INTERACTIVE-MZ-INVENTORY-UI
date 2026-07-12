@@ -9,11 +9,19 @@ LOGICPULSE.Scenes = LOGICPULSE.Scenes || {};
 
 LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
+    //--------------------------------
+    // Initialize
+    //--------------------------------
+
     initialize() {
 
         super.initialize();
 
     }
+
+    //--------------------------------
+    // Create
+    //--------------------------------
 
     create() {
 
@@ -23,10 +31,15 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         this.createSidebar();
         this.createShowcase();
         this.createGrid();
+        this.createController();
 
-
+        this.onSelectionChanged();
 
     }
+
+    //--------------------------------
+    // Background
+    //--------------------------------
 
     createBackground() {
 
@@ -37,12 +50,13 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
         );
 
-        background.x = 0;
-        background.y = 0;
-
         this.addChild(background);
 
     }
+
+    //--------------------------------
+    // Sidebar
+    //--------------------------------
 
     createSidebar() {
 
@@ -52,6 +66,10 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
     }
 
+    //--------------------------------
+    // Showcase
+    //--------------------------------
+
     createShowcase() {
 
         this._showcase = new LOGICPULSE.UI.Showcase();
@@ -59,6 +77,10 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
         this.addChild(this._showcase);
 
     }
+
+    //--------------------------------
+    // Grid
+    //--------------------------------
 
     createGrid() {
 
@@ -72,49 +94,31 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
     }
 
-    update() {
+    //--------------------------------
+    // Controller
+    //--------------------------------
 
-        super.update();
+    createController() {
 
-        this.updateGridInput();
+        this._controller = new LOGICPULSE.InventoryController(
+
+            this
+
+        );
 
     }
 
     //--------------------------------
-    // Grid Input
+    // Update
     //--------------------------------
 
-    updateGridInput() {
+    update() {
 
-        if (Input.isRepeated("right")) {
+        super.update();
 
-            this._grid.moveRight();
+        if (this._controller) {
 
-            this.onSelectionChanged();
-
-        }
-
-        else if (Input.isRepeated("left")) {
-
-            this._grid.moveLeft();
-
-            this.onSelectionChanged();
-
-        }
-
-        else if (Input.isRepeated("down")) {
-
-            this._grid.moveDown();
-
-            this.onSelectionChanged();
-
-        }
-
-        else if (Input.isRepeated("up")) {
-
-            this._grid.moveUp();
-
-            this.onSelectionChanged();
+            this._controller.update();
 
         }
 
@@ -126,6 +130,28 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
     onSelectionChanged() {
 
+        if (!this._grid) {
+
+            return;
+
+        }
+
+        const entry = this._grid.selectedEntry();
+
+        this._showcase.setItem(
+
+            entry
+
+        );
+
+    }
+
+    //--------------------------------
+    // Confirm
+    //--------------------------------
+
+    onConfirm() {
+
         const entry = this._grid.selectedEntry();
 
         if (!entry) {
@@ -134,11 +160,103 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
 
         }
 
-        console.log(
+        if (
 
-            entry.item.name
+            !LOGICPULSE.InventoryProvider.canUse(
 
-        );
+                entry.item
+
+            )
+
+        ) {
+
+            return;
+
+        }
+
+        const success =
+
+            LOGICPULSE.InventoryProvider.useItem(
+
+                entry.item
+
+            );
+
+        if (!success) {
+
+            return;
+
+        }
+
+        if (
+
+            this._showcase.playUseAnimation
+
+        ) {
+
+            this._showcase.playUseAnimation();
+
+        }
+
+        AudioManager.playSe({
+
+            name: "Decision2",
+
+            volume: 90,
+
+            pitch: 100,
+
+            pan: 0
+
+        });
+
+        this.refreshInventory();
+
+    }
+
+    //--------------------------------
+    // Cancel
+    //--------------------------------
+
+    onCancel() {
+
+        SceneManager.pop();
+
+    }
+
+    //--------------------------------
+    // Refresh Inventory
+    //--------------------------------
+
+    refreshInventory() {
+
+        const previousIndex =
+
+            this._grid.selectedIndex();
+
+        this._grid.buildGrid();
+
+        const max =
+
+            this._grid.items().length - 1;
+
+        if (max >= 0) {
+
+            this._grid.setSelectedIndex(
+
+                Math.min(
+
+                    previousIndex,
+
+                    max
+
+                )
+
+            );
+
+        }
+
+        this.onSelectionChanged();
 
     }
 

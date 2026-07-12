@@ -64,7 +64,7 @@ LOGICPULSE.UI.Element = class extends PIXI.Container {
     }
 
     //--------------------------------
-    // Sprite Helpers
+    // Sprite Helper
     //--------------------------------
 
     createSprite(folder, filename, x = 0, y = 0) {
@@ -81,6 +81,21 @@ LOGICPULSE.UI.Element = class extends PIXI.Container {
         this.addChild(sprite);
 
         return sprite;
+
+    }
+
+
+    //--------------------------------
+    // Text Helper
+    //--------------------------------
+
+    createText(options = {}) {
+
+        const text = new LOGICPULSE.UI.Text(options);
+
+        this.addChild(text);
+
+        return text;
 
     }
 

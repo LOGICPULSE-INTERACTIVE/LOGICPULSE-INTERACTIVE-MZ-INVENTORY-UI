@@ -30,6 +30,8 @@ LOGICPULSE.InventoryProvider = {
 
         this.buildInventory();
 
+        this.sortEntries();
+
         this._dirty = false;
 
     },
@@ -330,6 +332,105 @@ LOGICPULSE.InventoryProvider = {
         return Number(item.meta.rarity || 1);
 
     },
+
+
+    //--------------------------------
+    // Selected Amount
+    //--------------------------------
+
+    amount(item) {
+
+        if (!item) {
+
+            return 0;
+
+        }
+
+        return $gameParty.numItems(item);
+
+    },
+
+
+    //--------------------------------
+    // Sort Entries
+    //--------------------------------
+
+    sortEntries() {
+
+        for (const category of Object.keys(this._entries)) {
+
+            this._entries[category].sort((a, b) => {
+
+                // Higher rarity first
+                if (a.rarity !== b.rarity) {
+
+                    return b.rarity - a.rarity;
+
+                }
+
+                // Then alphabetical
+                return a.item.name.localeCompare(
+
+                    b.item.name
+
+                );
+
+            });
+
+        }
+
+    },
+
+    //--------------------------------
+    // Can Use
+    //--------------------------------
+
+    canUse(item) {
+
+        if (!item) {
+
+            return false;
+
+        }
+
+        return $gameParty.canUse(item);
+
+    },
+
+    //--------------------------------
+    // Use Item
+    //--------------------------------
+
+    useItem(item) {
+
+        if (!this.canUse(item)) {
+
+            return false;
+
+        }
+
+        const actor = $gameParty.leader();
+
+        if (!actor) {
+
+            return false;
+
+        }
+
+        const action = new Game_Action(actor);
+
+        action.setItemObject(item);
+
+        action.apply(actor);
+
+        $gameParty.consumeItem(item);
+
+        this.markDirty();
+
+        return true;
+
+    },
+
 
 
 };

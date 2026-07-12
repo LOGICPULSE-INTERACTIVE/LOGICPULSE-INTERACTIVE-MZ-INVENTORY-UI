@@ -44,10 +44,11 @@ LOGICPULSE.Assets = {
 
             Showcase: "Item Showcase Box",
 
+            UseButtonIdle: "Use Button Idle",
+            UseButtonHover: "Use Button Hover",
+
             ItemBoxCommon: "Item Box Common",
-
             ItemBoxRare: "Item Box Rare",
-
             ItemBoxLegendary: "Item Box Legendary",
 
             SelectionFrame: "Selection Frame",
@@ -180,6 +181,8 @@ LOGICPULSE.Assets = {
 
     },
 
+
+
     //==================================================
     // Create Sprite
     //==================================================
@@ -196,6 +199,28 @@ LOGICPULSE.Assets = {
         );
 
         return sprite;
+
+    },
+
+    //==================================================
+    // Create Showcase Item Sprite
+    //==================================================
+
+    createShowcaseItemSprite(item) {
+
+        if (!item) {
+
+            return new Sprite();
+
+        }
+
+        return this.createSprite(
+
+            this.Folders.Showcase,
+
+            `Item_${item.iconIndex}`
+
+        );
 
     },
 
@@ -220,6 +245,8 @@ LOGICPULSE.Assets = {
         );
 
     },
+
+
 
     //==================================================
     // Create RPG Maker Icon

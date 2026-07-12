@@ -37,6 +37,7 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
 
         this.createBackground();
         this.createIcon();
+        this.createAmount();
         this.createSelectionFrame();
 
         this.updateSelection();
@@ -100,6 +101,43 @@ LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
         this._icon.y = offset.y;
 
         this.addChild(this._icon);
+
+    }
+
+    //--------------------------------
+    // Amount
+    //--------------------------------
+
+
+    createAmount() {
+
+        if (this.amount() <= 1) {
+
+            return;
+
+        }
+
+
+        const layout =
+            LOGICPULSE.Layout.Inventory.Amount;
+
+        this._amountText = this.createText({
+
+            text: this.amount(),
+
+            x: layout.x,
+
+            y: layout.y,
+
+            width: layout.width,
+
+            height: layout.height,
+
+            align: layout.align,
+
+            fontSize: layout.fontSize
+
+        });
 
     }
 
