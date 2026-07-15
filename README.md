@@ -41,8 +41,6 @@ Add the following note to any item in the RPG Maker database:
 <rarity:3> // Uses Legendary Background Box
 ```
 
----
-
 ## Adding a New Recipe
 
 Add the following note to any item in the RPG Maker database:
@@ -66,7 +64,6 @@ Example:
 
 This means the item requires **2 of item ID 10** and **1 of item ID 15** to craft.
 
----
 
 ## Example of a Legendary Craftable Item
 
