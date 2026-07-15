@@ -79,8 +79,8 @@ src/
 ├── Constants.js – Item categories.
 
 ├── managers/
-
 │ ├── LPAssets.js – Image loading and caching.
+
 │ ├── LPLayout.js – UI layout coordinates (positions, sizes).
 │ ├── LPInput.js – Keyboard input wrapper.
 │ ├── LPBindings.js – Key mappings for navigation.
