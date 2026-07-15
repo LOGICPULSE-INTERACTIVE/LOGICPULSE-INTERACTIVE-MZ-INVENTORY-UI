@@ -79,36 +79,65 @@ src/
 ├── Constants.js – Item categories.
 
 ├── managers/
+
 │ ├── LPAssets.js – Image loading and caching.
 
 │ ├── LPLayout.js – UI layout coordinates (positions, sizes).
+
 │ ├── LPInput.js – Keyboard input wrapper.
+
 │ ├── LPBindings.js – Key mappings for navigation.
+
 │ ├── LPMouse.js – Mouse input handler (TouchInput based).
+
 │ ├── LPInventoryProvider.js – Manages item data from party inventory.
+
 │ ├── LPInventoryController.js – Controls inventory scene logic (navigation, use).
+
 │ ├── LPSynthesizerController.js – Controls synthesizer scene logic (craft, quantity).
+
 │ ├── LPGamePartyHooks.js – Hooks to auto‑refresh inventory on item changes.
+
 │ ├── LPRecipeManager.js – Parses and caches recipes from item notes.
+
 │ ├── LPCraftManager.js – Executes crafting (material removal, item gain).
+
 │ └── LPAnimator.js – UI animations (pulse, bitmap swap).
+
 ├── ui/
+
 │ ├── LPUIElement.js – Base class for all UI elements.
+
 │ ├── LPText.js – Multi‑line text with word wrap.
+
 │ ├── LPScrollText.js – Scrollable text block.
+
 │ ├── LPGridSlot.js – Individual inventory slot (item, amount, hover).
+
 │ ├── LPGrid.js – Inventory grid (layout, selection, scroll).
+
 │ ├── LPSynthesizerGridSlot.js – Synthesizer slot with craft state.
+
 │ ├── LPSynthesizerGrid.js – Synthesizer grid (uses different item provider).
+
 │ ├── LPSidebar.js – Sidebar with category tabs (mouse & keyboard).
+
 │ ├── LPShowcase.js – Item showcase (name, description, Use button).
+
 │ ├── LPSynthesizerShowcase.js – Synthesizer showcase (item preview, tip).
+
 │ ├── LPRecipePanel.js – Displays recipe ingredients.
+
 │ ├── LPQuantityController.js – Quantity arrows and number display.
+
 │ └── LPCraftButton.js – Craft button (hover, click, animation).
+
 ├── scenes/
+
 │ ├── LPSceneInventory.js – The inventory scene.
+
 │ └── LPSceneSynthesizer.js – The synthesizer scene.
+
 └── Main.js – Plugin entry point (registers command).
 
 
