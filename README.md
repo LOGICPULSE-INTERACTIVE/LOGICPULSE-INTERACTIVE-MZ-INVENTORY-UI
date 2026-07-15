@@ -29,36 +29,52 @@ For support or feature requests, please open an issue on GitHub.
 
 ----------------------------------------------------------------------------------------
 
-How To Work With this Plugin 
+# How To Work With This Plugin
 
-### Changing Rarity
+## Changing Rarity
 
 Add the following note to any item in the RPG Maker database:
+
+```text
 <rarity:1> // Uses Common Background Box
 <rarity:2> // Uses Rare Background Box
 <rarity:3> // Uses Legendary Background Box
+```
 
-### Adding a New Recipe
+## Adding a New Recipe
 
 Add the following note to any item in the RPG Maker database:
-<Recipe> itemId:amount itemId:amount ... </Recipe> ```
-e.g.
 
+```text
+<Recipe>
+itemId:amount
+itemId:amount
+...
+</Recipe>
+```
+
+Example:
+
+```text
 <Recipe>
 10:2
 15:1
 </Recipe>
+```
 
-This means the item requires 2 of item ID 10 and 1 of item ID 15 to craft.
+This means the item requires **2 of item ID 10** and **1 of item ID 15** to craft.
 
-Example of a Legendery Crafteble Item:
 
+## Example of a Legendary Craftable Item
+
+```text
 <rarity:3>
+
 <Recipe>
 10:2
 15:1
 </Recipe>
-
+```
 ------------------------------------------------------------------
 
 ## 📦 Installation
@@ -75,74 +91,42 @@ Example of a Legendery Crafteble Item:
 If you want to modify the plugin, the source code is organised in the `src/` folder.
 
 ### File Structure
+```text
 src/
-
 ├── Version.js – Plugin name and version.
-
 ├── Constants.js – Item categories.
-
 ├── managers/
-
 │ ├── LPAssets.js – Image loading and caching.
-
 │ ├── LPLayout.js – UI layout coordinates (positions, sizes).
-
 │ ├── LPInput.js – Keyboard input wrapper.
-
 │ ├── LPBindings.js – Key mappings for navigation.
-
 │ ├── LPMouse.js – Mouse input handler (TouchInput based).
-
 │ ├── LPInventoryProvider.js – Manages item data from party inventory.
-
 │ ├── LPInventoryController.js – Controls inventory scene logic (navigation, use).
-
 │ ├── LPSynthesizerController.js – Controls synthesizer scene logic (craft, quantity).
-
 │ ├── LPGamePartyHooks.js – Hooks to auto‑refresh inventory on item changes.
-
 │ ├── LPRecipeManager.js – Parses and caches recipes from item notes.
-
 │ ├── LPCraftManager.js – Executes crafting (material removal, item gain).
-
 │ └── LPAnimator.js – UI animations (pulse, bitmap swap).
-
 ├── ui/
-
 │ ├── LPUIElement.js – Base class for all UI elements.
-
 │ ├── LPText.js – Multi‑line text with word wrap.
-
 │ ├── LPScrollText.js – Scrollable text block.
-
 │ ├── LPGridSlot.js – Individual inventory slot (item, amount, hover).
-
 │ ├── LPGrid.js – Inventory grid (layout, selection, scroll).
-
 │ ├── LPSynthesizerGridSlot.js – Synthesizer slot with craft state.
-
 │ ├── LPSynthesizerGrid.js – Synthesizer grid (uses different item provider).
-
 │ ├── LPSidebar.js – Sidebar with category tabs (mouse & keyboard).
-
 │ ├── LPShowcase.js – Item showcase (name, description, Use button).
-
 │ ├── LPSynthesizerShowcase.js – Synthesizer showcase (item preview, tip).
-
 │ ├── LPRecipePanel.js – Displays recipe ingredients.
-
 │ ├── LPQuantityController.js – Quantity arrows and number display.
-
 │ └── LPCraftButton.js – Craft button (hover, click, animation).
-
 ├── scenes/
-
 │ ├── LPSceneInventory.js – The inventory scene.
-
 │ └── LPSceneSynthesizer.js – The synthesizer scene.
-
 └── Main.js – Plugin entry point (registers command).
-
+```
 
 ### How to Edit
 
