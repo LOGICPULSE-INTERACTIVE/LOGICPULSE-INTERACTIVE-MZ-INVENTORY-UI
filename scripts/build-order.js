@@ -2,11 +2,13 @@
 
 module.exports = [
     // Core
+    "src/Header.js",
     "src/Version.js",
     "src/Constants.js",
 
     // Managers
     "src/managers/LPAssets.js",
+    "src/managers/LPParameters.js",
     "src/managers/LPLayout.js",
     "src/managers/LPInput.js",
     "src/managers/LPBindings.js",

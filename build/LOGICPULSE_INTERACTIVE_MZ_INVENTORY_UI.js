@@ -16,11 +16,599 @@
  *
  * Edit the files inside /src instead.
  *
- * Build Date: 2026-07-15T14:17:15.243Z
+ * Build Date: 2026-07-16T17:57:05.257Z
  * ============================================================================
  */
 
 "use strict";
+
+
+//=============================================================================
+// Header.js
+//=============================================================================
+
+/*:
+ * @target MZ
+ * @plugindesc Modern Cyberpunk Inventory UI with full mouse support and crafting.
+ * @author LOGICPULSE
+ * @version 1.0.0
+ *
+ * @command OpenInventory
+ * @text Open Inventory
+ * @desc Opens the LOGICPULSE Inventory Scene.
+ *
+ * @command OpenSynthesizer
+ * @text Open Synthesizer
+ * @desc Opens the LOGICPULSE Synthesizer Scene.
+ *
+ * ============================================================================
+ * PARAMETERS – INVENTORY
+ * ============================================================================
+ *
+ * @param // SIDEBAR PARAMETERS
+ *
+ * @param SidebarTabX
+ * @text Sidebar Tab X
+ * @desc X position of the sidebar tabs.
+ * @type number
+ * @default 4
+ *
+ * @param SidebarTabY
+ * @text Sidebar Tab Y
+ * @desc Y position of the first sidebar tab.
+ * @type number
+ * @default 130
+ *
+ * @param SidebarTabSpacing
+ * @text Sidebar Tab Spacing
+ * @desc Vertical spacing between sidebar tabs.
+ * @type number
+ * @default 52
+ *
+ * @param SidebarTabWidth
+ * @text Sidebar Tab Width
+ * @desc Width of each sidebar tab.
+ * @type number
+ * @default 44
+ *
+ * @param SidebarTabHeight
+ * @text Sidebar Tab Height
+ * @desc Height of each sidebar tab.
+ * @type number
+ * @default 44
+ *
+ * @param // Inventory Grid
+ *
+ * @param InventoryGridX
+ * @text Inventory Grid X
+ * @desc X position of the inventory grid.
+ * @type number
+ * @default 82
+ *
+ * @param InventoryGridY
+ * @text Inventory Grid Y
+ * @desc Y position of the inventory grid.
+ * @type number
+ * @default 118
+ *
+ * @param InventoryGridWidth
+ * @text Inventory Grid Width
+ * @desc Width of the inventory grid.
+ * @type number
+ * @default 768
+ *
+ * @param InventoryGridHeight
+ * @text Inventory Grid Height
+ * @desc Height of the inventory grid.
+ * @type number
+ * @default 576
+ *
+ * @param InventoryColumns
+ * @text Inventory Columns
+ * @desc Number of columns in the inventory grid.
+ * @type number
+ * @min 4
+ * @max 12
+ * @default 8
+ *
+ * @param InventorySpacingX
+ * @text Inventory Spacing X
+ * @desc Horizontal spacing between inventory slots.
+ * @type number
+ * @default 96
+ *
+ * @param InventorySpacingY
+ * @text Inventory Spacing Y
+ * @desc Vertical spacing between inventory slots.
+ * @type number
+ * @default 96
+ *
+ * @param InventoryItemSize
+ * @text Inventory Item Size
+ * @desc Size of each inventory slot (hit detection).
+ * @type number
+ * @default 92
+ *
+ * @param // Inventory Showcase
+ *
+ * @param InventoryShowX
+ * @text Inventory Showcase X
+ * @desc X position of the inventory showcase frame.
+ * @type number
+ * @default 912
+ *
+ * @param InventoryShowY
+ * @text Inventory Showcase Y
+ * @desc Y position of the inventory showcase frame.
+ * @type number
+ * @default 144
+ *
+ * @param InventoryShowWidth
+ * @text Inventory Showcase Width
+ * @desc Width of the inventory showcase frame.
+ * @type number
+ * @default 288
+ *
+ * @param InventoryShowHeight
+ * @text Inventory Showcase Height
+ * @desc Height of the inventory showcase frame.
+ * @type number
+ * @default 288
+ *
+ *
+ * @param InventoryUseX
+ * @text Inventory Use Button X
+ * @desc X position of the Use button.
+ * @type number
+ * @default 912
+ *
+ * @param InventoryUseY
+ * @text Inventory Use Button Y
+ * @desc Y position of the Use button.
+ * @type number
+ * @default 640
+ *
+ * @param InventoryUseWidth
+ * @text Inventory Use Button Width
+ * @desc Width of the Use button.
+ * @type number
+ * @default 288
+ *
+ * @param InventoryUseHeight
+ * @text Inventory Use Button Height
+ * @desc Height of the Use button.
+ * @type number
+ * @default 48
+ *
+ *
+ * @param InventoryDescFontSize
+ * @text Inventory Description Font Size
+ * @desc Font size for the inventory description text.
+ * @type number
+ * @min 12
+ * @max 28
+ * @default 20
+ *
+ *
+ * @param // Synthesizer Grid side
+ *
+ *
+ * @param SynthesizerGridX
+ * @text Synthesizer Grid X
+ * @desc X position of the synthesizer grid.
+ * @type number
+ * @default 96
+ *
+ * @param SynthesizerGridY
+ * @text Synthesizer Grid Y
+ * @desc Y position of the synthesizer grid.
+ * @type number
+ * @default 192
+ *
+ * @param SynthesizerGridWidth
+ * @text Synthesizer Grid Width
+ * @desc Width of the synthesizer grid.
+ * @type number
+ * @default 384
+ *
+ * @param SynthesizerGridHeight
+ * @text Synthesizer Grid Height
+ * @desc Height of the synthesizer grid.
+ * @type number
+ * @default 480
+ *
+ * @param SynthesizerColumns
+ * @text Synthesizer Columns
+ * @desc Number of columns in the synthesizer grid.
+ * @type number
+ * @min 2
+ * @max 8
+ * @default 4
+ *
+ * @param SynthesizerSpacingX
+ * @text Synthesizer Spacing X
+ * @desc Horizontal spacing between synthesizer slots.
+ * @type number
+ * @default 96
+ *
+ * @param SynthesizerSpacingY
+ * @text Synthesizer Spacing Y
+ * @desc Vertical spacing between synthesizer slots.
+ * @type number
+ * @default 96
+ *
+ * @param SynthesizerItemSize
+ * @text Synthesizer Item Size
+ * @desc Size of each synthesizer slot (hit detection).
+ * @type number
+ * @default 92
+ *
+ * @param // Synthesizer Crafting side
+ *
+ * @param SynthesizerShowX
+ * @text Synthesizer Showcase X
+ * @desc X position of the synthesizer showcase frame.
+ * @type number
+ * @default 720
+ *
+ * @param SynthesizerShowY
+ * @text Synthesizer Showcase Y
+ * @desc Y position of the synthesizer showcase frame.
+ * @type number
+ * @default 168
+ *
+ * @param SynthesizerShowWidth
+ * @text Synthesizer Showcase Width
+ * @desc Width of the synthesizer showcase frame.
+ * @type number
+ * @default 288
+ *
+ * @param SynthesizerShowHeight
+ * @text Synthesizer Showcase Height
+ * @desc Height of the synthesizer showcase frame.
+ * @type number
+ * @default 288
+ *
+ *
+ * @param SynthesizerDescX
+ * @text Synthesizer Description X
+ * @desc X position of the synthesizer description.
+ * @type number
+ * @default 528
+ *
+ * @param SynthesizerDescY
+ * @text Synthesizer Description Y
+ * @desc Y position of the synthesizer description.
+ * @type number
+ * @default 168
+ *
+ * @param SynthesizerDescWidth
+ * @text Synthesizer Description Width
+ * @desc Width of the synthesizer description.
+ * @type number
+ * @default 180
+ *
+ * @param SynthesizerDescHeight
+ * @text Synthesizer Description Height
+ * @desc Height of the synthesizer description.
+ * @type number
+ * @default 300
+ *
+ * @param SynthesizerDescFontSize
+ * @text Synthesizer Description Font Size
+ * @desc Font size for the synthesizer description.
+ * @type number
+ * @min 12
+ * @max 28
+ * @default 16
+ *
+ *
+ * @param SynthesizerTipX
+ * @text Synthesizer Tip X
+ * @desc X position of the Tip image.
+ * @type number
+ * @default 1032
+ *
+ * @param SynthesizerTipY
+ * @text Synthesizer Tip Y
+ * @desc Y position of the Tip image.
+ * @type number
+ * @default 145
+ *
+ *
+ * @param SynthesizerDecreaseX
+ * @text Decrease Arrow X
+ * @desc X position of the Decrease arrow.
+ * @type number
+ * @default 768
+ *
+ * @param SynthesizerDecreaseY
+ * @text Decrease Arrow Y
+ * @desc Y position of the Decrease arrow.
+ * @type number
+ * @default 600
+ *
+ * @param SynthesizerDecreaseWidth
+ * @text Decrease Arrow Width
+ * @desc Width of the Decrease arrow.
+ * @type number
+ * @default 27
+ *
+ * @param SynthesizerDecreaseHeight
+ * @text Decrease Arrow Height
+ * @desc Height of the Decrease arrow.
+ * @type number
+ * @default 27
+ *
+ * @param SynthesizerIncreaseX
+ * @text Increase Arrow X
+ * @desc X position of the Increase arrow.
+ * @type number
+ * @default 930
+ *
+ * @param SynthesizerIncreaseY
+ * @text Increase Arrow Y
+ * @desc Y position of the Increase arrow.
+ * @type number
+ * @default 600
+ *
+ * @param SynthesizerIncreaseWidth
+ * @text Increase Arrow Width
+ * @desc Width of the Increase arrow.
+ * @type number
+ * @default 27
+ *
+ * @param SynthesizerIncreaseHeight
+ * @text Increase Arrow Height
+ * @desc Height of the Increase arrow.
+ * @type number
+ * @default 27
+ *
+ *
+ * @param SynthesizerCurrentX
+ * @text Crafting Number X
+ * @desc X position of the current quantity number.
+ * @type number
+ * @default 822
+ *
+ * @param SynthesizerCurrentY
+ * @text Crafting Number Y
+ * @desc Y position of the current quantity number.
+ * @type number
+ * @default 598
+ *
+ * @param SynthesizerCurrentWidth
+ * @text Crafting Number Width
+ * @desc Width of the current quantity number.
+ * @type number
+ * @default 80
+ *
+ * @param SynthesizerCurrentHeight
+ * @text Crafting Number Height
+ * @desc Height of the current quantity number.
+ * @type number
+ * @default 32
+ *
+ * @param SynthesizerCurrentFontSize
+ * @text Crafting Number Font Size
+ * @desc Font size of the current quantity number.
+ * @type number
+ * @default 28
+ *
+ * @param SynthesizerMaxX
+ * @text Max Available Crafting Number X
+ * @desc X position of the max quantity number.
+ * @type number
+ * @default 686
+ *
+ * @param SynthesizerMaxY
+ * @text Max Available Crafting Number Y
+ * @desc Y position of the max quantity number.
+ * @type number
+ * @default 194
+ *
+ * @param SynthesizerMaxWidth
+ * @text Max Available Crafting Number Width
+ * @desc Width of the max quantity number.
+ * @type number
+ * @default 80
+ *
+ * @param SynthesizerMaxHeight
+ * @text Max Available Crafting Number Height
+ * @desc Height of the max quantity number.
+ * @type number
+ * @default 32
+ *
+ * @param SynthesizerMaxFontSize
+ * @text Max Available Crafting Number Font Size
+ * @desc Font size of the max quantity number.
+ * @type number
+ * @default 20
+ *
+ *
+ * @param SynthesizerCraftX
+ * @text Synthesizer Crafting Button X
+ * @desc X position of the Craft button.
+ * @type number
+ * @default 790
+ *
+ * @param SynthesizerCraftY
+ * @text Synthesizer Crafting Button Y
+ * @desc Y position of the Craft button.
+ * @type number
+ * @default 650
+ *
+ * @param SynthesizerCraftWidth
+ * @text Synthesizer Crafting Button Width
+ * @desc Width of the Craft button.
+ * @type number
+ * @default 160
+ *
+ * @param SynthesizerCraftHeight
+ * @text Synthesizer Crafting Button Height
+ * @desc Height of the Craft button.
+ * @type number
+ * @default 30
+ *
+ * @param // Recipe Panel
+ *
+ * @param RecipeFirstX
+ * @text Recipe First Slot X
+ * @desc X position of the first recipe ingredient slot.
+ * @type number
+ * @default 672
+ *
+ * @param RecipeFirstY
+ * @text Recipe First Slot Y
+ * @desc Y position of the first recipe ingredient slot.
+ * @type number
+ * @default 480
+ *
+ * @param RecipeSpacing
+ * @text Recipe Slot Spacing
+ * @desc Spacing between recipe ingredient slots.
+ * @type number
+ * @default 96
+ *
+
+ * ============================================================================
+ * HELP
+ * ============================================================================
+ * @help
+ * ============================================================================
+ * LOGICPULSE Interactive MZ Inventory UI v1.0.0
+ * ============================================================================
+ *
+ * A fully mouse-driven inventory and crafting system for RPG Maker MZ.
+ *
+ * ---------------------------------------------------------------------------
+ * FEATURES
+ * ---------------------------------------------------------------------------
+ * • Complete mouse interaction (hover, click, double-click, drag, scroll)
+ * • Two scenes: Inventory (browse/use) and Synthesizer (craft items)
+ * • Category sidebar: Consumables, Materials, Key Items, Synthesizer
+ * • Item showcase with name, description, and Use button
+ * • Recipe system via item notes (<Recipe>...</Recipe>)
+ * • Quantity control for crafting (arrows + keyboard)
+ * • Rarity system with custom backgrounds
+ * • Keyboard shortcuts: Arrows, Enter, Escape, Tab/Shift+Tab
+ *
+ * ---------------------------------------------------------------------------
+ * PLUGIN COMMANDS
+ * ---------------------------------------------------------------------------
+ * OpenInventory
+ *   Opens the inventory scene.
+ *
+ * OpenSynthesizer
+ *   Opens the synthesizer scene.
+ *
+ * Example:
+ *   Plugin Command: OpenInventory
+ *
+ * ---------------------------------------------------------------------------
+ * RECIPE SETUP (Item Notes)
+ * ---------------------------------------------------------------------------
+ * Add the following to any item's note field:
+ *
+ *   <Recipe>
+ *     itemId:amount
+ *     itemId:amount
+ *   </Recipe>
+ *
+ * Example:
+ *   <Recipe>
+ *     10:2
+ *     15:1
+ *   </Recipe>
+ *   Means: Requires 2 of item ID 10 and 1 of item ID 15 to craft.
+ *
+ * Optional rarity:
+ *   <rarity:1>   // Common (default)
+ *   <rarity:2>   // Rare
+ *   <rarity:3>   // Legendary
+ *
+ * Legendary craftable item:
+ *   <rarity:3>
+ *   <Recipe>
+ *     10:2
+ *     15:1
+ *   </Recipe>
+ *
+ * ---------------------------------------------------------------------------
+ * KEYBOARD SHORTCUTS
+ * ---------------------------------------------------------------------------
+ * Scene           | Keys
+ * ----------------|-----------------------------------------------
+ * Inventory       | Arrow keys        - Navigate grid
+ *                 | Enter/OK          - Use selected item
+ *                 | Escape/Cancel     - Close scene
+ *                 | Tab               - Next category
+ *                 | Shift+Tab         - Previous category
+ * Synthesizer     | Arrow keys        - Navigate grid
+ *                 | Enter/OK          - Enter craft mode / Craft
+ *                 | Escape/Cancel     - Leave craft mode / Close scene
+ *                 | Tab               - Switch to Inventory
+ * Craft Quantity  | Left/Right arrows - Adjust quantity
+ *                 | Shift+Left/Right  - Set to max/min
+ *                 | Skip+Left/Right   - +10/-10
+ *
+ * ---------------------------------------------------------------------------
+ * MOUSE CONTROLS
+ * ---------------------------------------------------------------------------
+ * • Hover over any item → Visual highlight (no selection change)
+ * • Click an item → Selects it, updates showcase
+ * • Double-click an item → Uses it (Inventory) or enters craft mode (Synthesizer)
+ * • Scroll wheel over grid → Scrolls the grid
+ * • Scroll wheel over description → Scrolls description text
+ * • Click on category tabs → Switch categories
+ * • Click on Use button → Uses the selected item
+ * • Click on Craft button → Crafts the selected item (in craft mode)
+ * • Click on +/- arrows → Adjust craft quantity
+ * • Drag items → Rearrange inventory (if enabled)
+ *
+ * ---------------------------------------------------------------------------
+ * FOLDER STRUCTURE (for custom assets)
+ * ---------------------------------------------------------------------------
+ * Place your custom images in:
+ *   img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/
+ *   img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Sidebar/
+ *   img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Items/
+ *   img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Items_Show_Case/
+ *   img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Synthesizer/
+ *
+ * Required image naming:
+ *   Items: Item_<iconIndex>.png (e.g., Item_1.png)
+ *   Showcase: Item_<iconIndex>.png
+ *   Sidebar: Sidebar Consumable Tab Idle.png, etc.
+ *   Synthesizer: Background.png, Synthesize Button Idle.png, etc.
+ *
+ * ---------------------------------------------------------------------------
+ * TROUBLESHOOTING
+ * ---------------------------------------------------------------------------
+ * Q: Items aren't showing up in the grid.
+ * A: Make sure the party actually has items in their inventory.
+ *
+ * Q: Recipes aren't working.
+ * A: Check that the <Recipe> tags are correctly formatted and the item IDs exist.
+ *
+ * Q: Mouse isn't working.
+ * A: Make sure the plugin is enabled and that you're using RPG Maker MZ (not MV).
+ *
+ * Q: The Use button isn't showing.
+ * A: Only consumable items (itypeId: 1) with occasion ≠ 3 show the Use button.
+ *
+ * ---------------------------------------------------------------------------
+ * TERMS OF USE
+ * ---------------------------------------------------------------------------
+ * MIT License – free for personal and commercial use.
+ * Credit is appreciated but not required.
+ *
+ * ============================================================================
+ */
+
+//=============================================================================
+// Header - Plugin Metadata
+//=============================================================================
 
 
 //=============================================================================
@@ -422,55 +1010,357 @@ LOGICPULSE.Assets = {
 
 
 //=============================================================================
+// LPParameters.js
+//=============================================================================
+
+//=============================================================================
+// LPParameters.js
+//=============================================================================
+
+window.LOGICPULSE = window.LOGICPULSE || {};
+
+LOGICPULSE.Parameters = {
+
+    //--------------------------------
+    // Plugin Name
+    //--------------------------------
+
+    _pluginName: "LOGICPULSE_INTERACTIVE_MZ_INVENTORY_UI",
+
+    //--------------------------------
+    // Internal storage
+    //--------------------------------
+
+    _params: {},
+
+    //--------------------------------
+    // Initialize
+    //--------------------------------
+
+    initialize: function() {
+        if (!LOGICPULSE.Layout) {
+            console.warn('[LOGICPULSE] Layout not loaded yet.');
+            return;
+        }
+        this._readParams();
+        this._applyParamsToLayout();
+    },
+
+    //--------------------------------
+    // Read Parameters
+    //--------------------------------
+
+    _readParams: function() {
+        var params = PluginManager.parameters(this._pluginName);
+        var p = this._params;
+        var L = LOGICPULSE.Layout;
+
+        var getNumber = function(key, defaultVal) {
+            var val = params[key];
+            if (val !== undefined && val !== '') {
+                return Number(val);
+            }
+            return defaultVal;
+        };
+
+        //========= INVENTORY GRID =========
+        p.invGridX = getNumber('InventoryGridX', L.Inventory.Grid.rect.x);
+        p.invGridY = getNumber('InventoryGridY', L.Inventory.Grid.rect.y);
+        p.invGridWidth = getNumber('InventoryGridWidth', L.Inventory.Grid.rect.width);
+        p.invGridHeight = getNumber('InventoryGridHeight', L.Inventory.Grid.rect.height);
+        p.invColumns = getNumber('InventoryColumns', L.Inventory.Grid.columns);
+        p.invSpacingX = getNumber('InventorySpacingX', L.Inventory.Grid.spacingX);
+        p.invSpacingY = getNumber('InventorySpacingY', L.Inventory.Grid.spacingY);
+        p.invItemSize = getNumber('InventoryItemSize', L.Inventory.Grid.itemSize);
+
+        //========= INVENTORY SHOWCASE =========
+        p.invShowX = getNumber('InventoryShowX', L.Inventory.Showcase.Frame.x);
+        p.invShowY = getNumber('InventoryShowY', L.Inventory.Showcase.Frame.y);
+        p.invShowWidth = getNumber('InventoryShowWidth', L.Inventory.Showcase.Frame.width);
+        p.invShowHeight = getNumber('InventoryShowHeight', L.Inventory.Showcase.Frame.height);
+
+        //========= INVENTORY USE BUTTON =========
+        p.invUseX = getNumber('InventoryUseX', L.Inventory.Showcase.Button.x);
+        p.invUseY = getNumber('InventoryUseY', L.Inventory.Showcase.Button.y);
+        p.invUseWidth = getNumber('InventoryUseWidth', L.Inventory.Showcase.Button.width);
+        p.invUseHeight = getNumber('InventoryUseHeight', L.Inventory.Showcase.Button.height);
+
+        //========= INVENTORY DESCRIPTION =========
+        p.invDescFontSize = getNumber('InventoryDescFontSize', L.Inventory.Showcase.Description.fontSize);
+
+        //========= SHARED SIDEBAR =========
+        p.sidebarTabX = getNumber('SidebarTabX', L.Inventory.Sidebar.tabs.x);
+        p.sidebarTabY = getNumber('SidebarTabY', L.Inventory.Sidebar.tabs.y);
+        p.sidebarTabSpacing = getNumber('SidebarTabSpacing', L.Inventory.Sidebar.tabs.spacing);
+        p.sidebarTabWidth = getNumber('SidebarTabWidth', L.Inventory.Sidebar.tabs.width);
+        p.sidebarTabHeight = getNumber('SidebarTabHeight', L.Inventory.Sidebar.tabs.height);
+
+        //========= SYNTHESIZER GRID =========
+        p.synGridX = getNumber('SynthesizerGridX', L.Synthesizer.Grid.rect.x);
+        p.synGridY = getNumber('SynthesizerGridY', L.Synthesizer.Grid.rect.y);
+        p.synGridWidth = getNumber('SynthesizerGridWidth', L.Synthesizer.Grid.rect.width);
+        p.synGridHeight = getNumber('SynthesizerGridHeight', L.Synthesizer.Grid.rect.height);
+        p.synColumns = getNumber('SynthesizerColumns', L.Synthesizer.Grid.columns);
+        p.synSpacingX = getNumber('SynthesizerSpacingX', L.Synthesizer.Grid.spacingX);
+        p.synSpacingY = getNumber('SynthesizerSpacingY', L.Synthesizer.Grid.spacingY);
+        p.synItemSize = getNumber('SynthesizerItemSize', L.Synthesizer.Grid.itemSize);
+
+        //========= SYNTHESIZER SHOWCASE =========
+        p.synShowX = getNumber('SynthesizerShowX', L.Synthesizer.Showcase.Frame.x);
+        p.synShowY = getNumber('SynthesizerShowY', L.Synthesizer.Showcase.Frame.y);
+        p.synShowWidth = getNumber('SynthesizerShowWidth', L.Synthesizer.Showcase.Frame.width);
+        p.synShowHeight = getNumber('SynthesizerShowHeight', L.Synthesizer.Showcase.Frame.height);
+
+        p.synDescX = getNumber('SynthesizerDescX', L.Synthesizer.Showcase.Description.x);
+        p.synDescY = getNumber('SynthesizerDescY', L.Synthesizer.Showcase.Description.y);
+        p.synDescWidth = getNumber('SynthesizerDescWidth', L.Synthesizer.Showcase.Description.width);
+        p.synDescHeight = getNumber('SynthesizerDescHeight', L.Synthesizer.Showcase.Description.height);
+        p.synDescFontSize = getNumber('SynthesizerDescFontSize', L.Synthesizer.Showcase.Description.fontSize);
+
+        p.synTipX = getNumber('SynthesizerTipX', L.Synthesizer.Showcase.Tip.x);
+        p.synTipY = getNumber('SynthesizerTipY', L.Synthesizer.Showcase.Tip.y);
+
+        p.synDecreaseX = getNumber('SynthesizerDecreaseX', L.Synthesizer.Showcase.ItemDecrease.x);
+        p.synDecreaseY = getNumber('SynthesizerDecreaseY', L.Synthesizer.Showcase.ItemDecrease.y);
+        p.synDecreaseWidth = getNumber('SynthesizerDecreaseWidth', L.Synthesizer.Showcase.ItemDecrease.width);
+        p.synDecreaseHeight = getNumber('SynthesizerDecreaseHeight', L.Synthesizer.Showcase.ItemDecrease.height);
+
+        p.synIncreaseX = getNumber('SynthesizerIncreaseX', L.Synthesizer.Showcase.ItemIncrease.x);
+        p.synIncreaseY = getNumber('SynthesizerIncreaseY', L.Synthesizer.Showcase.ItemIncrease.y);
+        p.synIncreaseWidth = getNumber('SynthesizerIncreaseWidth', L.Synthesizer.Showcase.ItemIncrease.width);
+        p.synIncreaseHeight = getNumber('SynthesizerIncreaseHeight', L.Synthesizer.Showcase.ItemIncrease.height);
+
+        p.synCurrentX = getNumber('SynthesizerCurrentX', L.Synthesizer.Showcase.CurrentNumber.x);
+        p.synCurrentY = getNumber('SynthesizerCurrentY', L.Synthesizer.Showcase.CurrentNumber.y);
+        p.synCurrentWidth = getNumber('SynthesizerCurrentWidth', L.Synthesizer.Showcase.CurrentNumber.width);
+        p.synCurrentHeight = getNumber('SynthesizerCurrentHeight', L.Synthesizer.Showcase.CurrentNumber.height);
+        p.synCurrentFontSize = getNumber('SynthesizerCurrentFontSize', L.Synthesizer.Showcase.CurrentNumber.fontSize);
+
+        p.synMaxX = getNumber('SynthesizerMaxX', L.Synthesizer.Showcase.MaxNumber.x);
+        p.synMaxY = getNumber('SynthesizerMaxY', L.Synthesizer.Showcase.MaxNumber.y);
+        p.synMaxWidth = getNumber('SynthesizerMaxWidth', L.Synthesizer.Showcase.MaxNumber.width);
+        p.synMaxHeight = getNumber('SynthesizerMaxHeight', L.Synthesizer.Showcase.MaxNumber.height);
+        p.synMaxFontSize = getNumber('SynthesizerMaxFontSize', L.Synthesizer.Showcase.MaxNumber.fontSize);
+
+        p.synCraftX = getNumber('SynthesizerCraftX', L.Synthesizer.Showcase.Button.x);
+        p.synCraftY = getNumber('SynthesizerCraftY', L.Synthesizer.Showcase.Button.y);
+        p.synCraftWidth = getNumber('SynthesizerCraftWidth', L.Synthesizer.Showcase.Button.width);
+        p.synCraftHeight = getNumber('SynthesizerCraftHeight', L.Synthesizer.Showcase.Button.height);
+
+        //========= RECIPE PANEL =========
+        p.recipeFirstX = getNumber('RecipeFirstX', L.Synthesizer.RecipeItemBoxes.firstSlot.x);
+        p.recipeFirstY = getNumber('RecipeFirstY', L.Synthesizer.RecipeItemBoxes.firstSlot.y);
+        p.recipeSpacing = getNumber('RecipeSpacing', L.Synthesizer.RecipeItemBoxes.spacing);
+
+        //========= GLOBAL HOVER SCALES =========
+        var defaultHoverScale = L.HoverScale !== undefined ? L.HoverScale : 1.02;
+        var defaultUseHoverScale = L.UseButtonHoverScale !== undefined ? L.UseButtonHoverScale : 1.05;
+
+        p.hoverScale = getNumber('HoverScale', defaultHoverScale);
+        p.useHoverScale = getNumber('UseButtonHoverScale', defaultUseHoverScale);
+    },
+
+    //--------------------------------
+    // Apply parameters to Layout
+    //--------------------------------
+
+    _applyParamsToLayout: function() {
+        var p = this._params;
+        var L = LOGICPULSE.Layout;
+
+        //========= INVENTORY GRID =========
+        L.Inventory.Grid.rect.x = p.invGridX;
+        L.Inventory.Grid.rect.y = p.invGridY;
+        L.Inventory.Grid.rect.width = p.invGridWidth;
+        L.Inventory.Grid.rect.height = p.invGridHeight;
+        // Update mask to match rect
+        L.Inventory.Grid.mask.x = p.invGridX;
+        L.Inventory.Grid.mask.y = p.invGridY;
+        L.Inventory.Grid.mask.width = p.invGridWidth;
+        L.Inventory.Grid.mask.height = p.invGridHeight;
+
+        L.Inventory.Grid.columns = p.invColumns;
+        L.Inventory.Grid.spacingX = p.invSpacingX;
+        L.Inventory.Grid.spacingY = p.invSpacingY;
+        L.Inventory.Grid.itemSize = p.invItemSize;
+
+        //========= INVENTORY SHOWCASE =========
+        L.Inventory.Showcase.Frame.x = p.invShowX;
+        L.Inventory.Showcase.Frame.y = p.invShowY;
+        L.Inventory.Showcase.Frame.width = p.invShowWidth;
+        L.Inventory.Showcase.Frame.height = p.invShowHeight;
+
+        // Update Name position to match Frame
+        L.Inventory.Showcase.Name.x = p.invShowX;
+        L.Inventory.Showcase.Name.y = p.invShowY + 8;
+
+        // Update Description position to align with Frame
+        L.Inventory.Showcase.Description.x = p.invShowX;
+        L.Inventory.Showcase.Description.y = p.invShowY + p.invShowHeight + 28;
+        L.Inventory.Showcase.Description.width = p.invShowWidth;
+        L.Inventory.Showcase.Description.fontSize = p.invDescFontSize;
+
+        // Update Description height based on available space
+        // (Button is below description, so we keep the existing height)
+        // Actually, we keep the user's default, so we don't override height.
+
+        //========= INVENTORY USE BUTTON =========
+        L.Inventory.Showcase.Button.x = p.invUseX;
+        L.Inventory.Showcase.Button.y = p.invUseY;
+        L.Inventory.Showcase.Button.width = p.invUseWidth;
+        L.Inventory.Showcase.Button.height = p.invUseHeight;
+
+        //========= SHARED SIDEBAR =========
+        L.Inventory.Sidebar.tabs.x = p.sidebarTabX;
+        L.Inventory.Sidebar.tabs.y = p.sidebarTabY;
+        L.Inventory.Sidebar.tabs.spacing = p.sidebarTabSpacing;
+        L.Inventory.Sidebar.tabs.width = p.sidebarTabWidth;
+        L.Inventory.Sidebar.tabs.height = p.sidebarTabHeight;
+
+        //========= SYNTHESIZER GRID =========
+        L.Synthesizer.Grid.rect.x = p.synGridX;
+        L.Synthesizer.Grid.rect.y = p.synGridY;
+        L.Synthesizer.Grid.rect.width = p.synGridWidth;
+        L.Synthesizer.Grid.rect.height = p.synGridHeight;
+        // Update mask to match rect
+        L.Synthesizer.Grid.mask.x = p.synGridX;
+        L.Synthesizer.Grid.mask.y = p.synGridY;
+        L.Synthesizer.Grid.mask.width = p.synGridWidth;
+        L.Synthesizer.Grid.mask.height = p.synGridHeight;
+
+        L.Synthesizer.Grid.columns = p.synColumns;
+        L.Synthesizer.Grid.spacingX = p.synSpacingX;
+        L.Synthesizer.Grid.spacingY = p.synSpacingY;
+        L.Synthesizer.Grid.itemSize = p.synItemSize;
+
+        //========= SYNTHESIZER SHOWCASE =========
+        L.Synthesizer.Showcase.Frame.x = p.synShowX;
+        L.Synthesizer.Showcase.Frame.y = p.synShowY;
+        L.Synthesizer.Showcase.Frame.width = p.synShowWidth;
+        L.Synthesizer.Showcase.Frame.height = p.synShowHeight;
+
+        // Update Name position to match Frame
+        L.Synthesizer.Showcase.Name.x = p.synShowX;
+        L.Synthesizer.Showcase.Name.y = p.synShowY + 2;
+
+        // Description
+        L.Synthesizer.Showcase.Description.x = p.synDescX;
+        L.Synthesizer.Showcase.Description.y = p.synDescY;
+        L.Synthesizer.Showcase.Description.width = p.synDescWidth;
+        L.Synthesizer.Showcase.Description.height = p.synDescHeight;
+        L.Synthesizer.Showcase.Description.fontSize = p.synDescFontSize;
+
+        // Tip
+        L.Synthesizer.Showcase.Tip.x = p.synTipX;
+        L.Synthesizer.Showcase.Tip.y = p.synTipY;
+
+        // Item Decrease Arrow
+        L.Synthesizer.Showcase.ItemDecrease.x = p.synDecreaseX;
+        L.Synthesizer.Showcase.ItemDecrease.y = p.synDecreaseY;
+        L.Synthesizer.Showcase.ItemDecrease.width = p.synDecreaseWidth;
+        L.Synthesizer.Showcase.ItemDecrease.height = p.synDecreaseHeight;
+
+        // Item Increase Arrow
+        L.Synthesizer.Showcase.ItemIncrease.x = p.synIncreaseX;
+        L.Synthesizer.Showcase.ItemIncrease.y = p.synIncreaseY;
+        L.Synthesizer.Showcase.ItemIncrease.width = p.synIncreaseWidth;
+        L.Synthesizer.Showcase.ItemIncrease.height = p.synIncreaseHeight;
+
+        // Current Number
+        L.Synthesizer.Showcase.CurrentNumber.x = p.synCurrentX;
+        L.Synthesizer.Showcase.CurrentNumber.y = p.synCurrentY;
+        L.Synthesizer.Showcase.CurrentNumber.width = p.synCurrentWidth;
+        L.Synthesizer.Showcase.CurrentNumber.height = p.synCurrentHeight;
+        L.Synthesizer.Showcase.CurrentNumber.fontSize = p.synCurrentFontSize;
+
+        // Max Number
+        L.Synthesizer.Showcase.MaxNumber.x = p.synMaxX;
+        L.Synthesizer.Showcase.MaxNumber.y = p.synMaxY;
+        L.Synthesizer.Showcase.MaxNumber.width = p.synMaxWidth;
+        L.Synthesizer.Showcase.MaxNumber.height = p.synMaxHeight;
+        L.Synthesizer.Showcase.MaxNumber.fontSize = p.synMaxFontSize;
+
+        // Craft Button
+        L.Synthesizer.Showcase.Button.x = p.synCraftX;
+        L.Synthesizer.Showcase.Button.y = p.synCraftY;
+        L.Synthesizer.Showcase.Button.width = p.synCraftWidth;
+        L.Synthesizer.Showcase.Button.height = p.synCraftHeight;
+
+        //========= RECIPE PANEL =========
+        L.Synthesizer.RecipeItemBoxes.firstSlot.x = p.recipeFirstX;
+        L.Synthesizer.RecipeItemBoxes.firstSlot.y = p.recipeFirstY;
+        L.Synthesizer.RecipeItemBoxes.spacing = p.recipeSpacing;
+
+        //========= GLOBAL HOVER SCALES =========
+        L.HoverScale = p.hoverScale;
+        L.UseButtonHoverScale = p.useHoverScale;
+    },
+
+    //--------------------------------
+    // Public API
+    //--------------------------------
+
+    get: function(key) {
+        return this._params[key];
+    },
+
+    getAll: function() {
+        return this._params;
+    }
+};
+
+
+//=============================================================================
 // LPLayout.js
 //=============================================================================
 
 window.LOGICPULSE = window.LOGICPULSE || {};
 
 //=============================================================================
-// Layout
+// Layout (mutable for parameters)
 //=============================================================================
 
-LOGICPULSE.Layout = Object.freeze({
+LOGICPULSE.Layout = {
 
     //==================================================
     // Inventory Scene
     //==================================================
 
-    Inventory: Object.freeze({
+    Inventory: {
 
-        Grid: Object.freeze({
-
-            rect: Object.freeze({
-
-                x: 82,
-                y: 118,
-                width: 768,
-                height: 576
-
-            }),
-
-            mask: Object.freeze({
+        Grid: {
+            //First Item box position (grid) for inventory
+            rect: {
 
                 x: 82,
                 y: 118,
                 width: 768,
                 height: 576
 
-            }),
+            },
+            //grid Mask position for inventory
+            mask: {
 
-            Icon: Object.freeze({
+                x: 82,
+                y: 118,
+                width: 768,
+                height: 576
 
-                offset: Object.freeze({
+            },
+
+            //position of the item pics in the item box for inventory
+            Icon: {
+
+                offset: {
 
                     x: 0,
 
                     y: 0
 
-                })
+                }
 
-            }),
-
+            },
+            //columns setting for inventory
             columns: 8,
 
             itemSize: 92,
@@ -479,9 +1369,9 @@ LOGICPULSE.Layout = Object.freeze({
 
             spacingY: 96
 
-        }),
-
-        Amount: Object.freeze({
+        },
+        //Item amount in party for inventory
+        Amount: {
 
             x: 52,
 
@@ -495,14 +1385,14 @@ LOGICPULSE.Layout = Object.freeze({
 
             fontSize: 18
 
-        }),
+        },
 
-        Sidebar: Object.freeze({
-
+        Sidebar: {
+            //sidebar box.png position for both inventory and Synthesizer
             x: 0,
             y: 0,
-
-            tabs: Object.freeze({
+            //sidebar tab icons settings for both inventory and Synthesizer
+            tabs: {
 
                 x: 4,
                 y: 130,
@@ -510,31 +1400,32 @@ LOGICPULSE.Layout = Object.freeze({
                 spacing: 52,
 
                 width: 44,
-                height: 44,
+                height: 44
 
-            })
+            }
 
-        }),
+        },
 
-        Showcase: Object.freeze({
 
-            Overlay: Object.freeze({
+        Showcase: {
+            //Item Showcase Box.png position for inventory
+            Overlay: {
 
                 x: 0,
                 y: 0
 
-            }),
-
-            Frame: Object.freeze({
+            },
+            //Showcase Items pics in Item Showcase Box position for inventory
+            Frame: {
 
                 x: 912,
                 y: 144,
                 width: 288,
                 height: 288
 
-            }),
-
-            Item: Object.freeze({
+            },
+            //Showcase Items pics size for inventory
+            Item: {
 
                 width: 184,
                 height: 184,
@@ -542,9 +1433,9 @@ LOGICPULSE.Layout = Object.freeze({
                 maxWidth: 184,
                 maxHeight: 184
 
-            }),
-
-            Name: Object.freeze({
+            },
+            //item name position in showcase for inventory
+            Name: {
 
                 x: 912,
                 y: 152,
@@ -555,9 +1446,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 24
 
-            }),
-
-            Description: Object.freeze({
+            },
+            //item Description position in showcase for inventory
+            Description: {
 
                 x: 912,
                 y: 460,
@@ -571,9 +1462,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 lineHeight: 26
 
-            }),
-
-            Button: Object.freeze({
+            },
+            //Use Button position in showcase for inventory
+            Button: {
 
                 x: 912,
                 y: 640,
@@ -583,53 +1474,52 @@ LOGICPULSE.Layout = Object.freeze({
                 hoverScale: 1.05,
 
                 width: 288,
-                height: 48,
+                height: 48
 
-            })
+            }
 
-        }),
+        }
 
-
-    }),
+    },
 
     //==================================================
     // Synthesizer Scene
     //==================================================
 
-    Synthesizer: Object.freeze({
+    Synthesizer: {
 
-        Grid: Object.freeze({
-
-            rect: Object.freeze({
-
-                x: 96,
-                y: 192,
-                width: 384,
-                height: 480
-
-            }),
-
-            mask: Object.freeze({
+        Grid: {
+            //First Item box position (grid) for Synthesizer
+            rect: {
 
                 x: 96,
                 y: 192,
                 width: 384,
                 height: 480
 
-            }),
+            },
+            //grid Mask position for Synthesizer
+            mask: {
 
-            Icon: Object.freeze({
+                x: 96,
+                y: 192,
+                width: 384,
+                height: 480
 
-                offset: Object.freeze({
+            },
+            //position of the item pics in the item box for Synthesizer
+            Icon: {
+
+                offset: {
 
                     x: 0,
 
                     y: 0
 
-                })
+                }
 
-            }),
-
+            },
+            //columns setting for Synthesizer
             columns: 4,
 
             itemSize: 92,
@@ -638,9 +1528,9 @@ LOGICPULSE.Layout = Object.freeze({
 
             spacingY: 96
 
-        }),
-
-        Amount: Object.freeze({
+        },
+        //Item amount in party for Synthesizer
+        Amount: {
 
             x: 52,
 
@@ -654,28 +1544,27 @@ LOGICPULSE.Layout = Object.freeze({
 
             fontSize: 18
 
-        }),
+        },
 
-
-        Showcase: Object.freeze({
-
-            Overlay: Object.freeze({
+        Showcase: {
+            //Item Showcase Box.png position for Synthesizer
+            Overlay: {
 
                 x: 0,
                 y: 0
 
-            }),
-
-            Frame: Object.freeze({
+            },
+            //Showcase Items pics in Item Showcase Box position for Synthesizer
+            Frame: {
 
                 x: 720,
                 y: 168,
                 width: 288,
                 height: 288
 
-            }),
-
-            Item: Object.freeze({
+            },
+            //Showcase Items pics size for Synthesizer
+            Item: {
 
                 width: 184,
                 height: 184,
@@ -683,9 +1572,9 @@ LOGICPULSE.Layout = Object.freeze({
                 maxWidth: 184,
                 maxHeight: 184
 
-            }),
-
-            Name: Object.freeze({
+            },
+            //item name position in showcase for Synthesizer
+            Name: {
 
                 x: 720,
                 y: 170,
@@ -696,9 +1585,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 24
 
-            }),
-
-            Description: Object.freeze({
+            },
+            //item Description position in showcase for Synthesizer
+            Description: {
 
                 x: 528,
                 y: 168,
@@ -710,41 +1599,40 @@ LOGICPULSE.Layout = Object.freeze({
 
                 padding: 8,
 
-
                 fontSize: 16,
 
                 lineHeight: 26
 
-            }),
-
-            Tip: Object.freeze({
+            },
+            //position of tip.png for Synthesizer
+            Tip: {
 
                 x: 1032,
-                y: 145,
+                y: 145
 
-            }),
-
-            ItemDecrease: Object.freeze({
+            },
+            //position of Item Decrease Arrow pngs for Synthesizer
+            ItemDecrease: {
 
                 x: 768,
                 y: 600,
 
                 width: 27,
-                height: 27,
+                height: 27
 
-            }),
-
-            ItemIncrease: Object.freeze({
+            },
+            //position of Item Increase Arrow pngs for Synthesizer
+            ItemIncrease: {
 
                 x: 930,
                 y: 600,
 
                 width: 27,
-                height: 27,
+                height: 27
 
-            }),
-
-            CurrentNumber: Object.freeze({
+            },
+            //position of Crafting Number for Synthesizer
+            CurrentNumber: {
 
                 x: 822,
                 y: 598,
@@ -756,9 +1644,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 28
 
-            }),
-
-            MaxNumber: Object.freeze({
+            },
+            //position of MAx Crafting Number Available for Synthesizer
+            MaxNumber: {
 
                 x: 686,
                 y: 194,
@@ -769,10 +1657,9 @@ LOGICPULSE.Layout = Object.freeze({
                 align: "center",
 
                 fontSize: 20
-            }),
-
-
-            Button: Object.freeze({
+            },
+            //Synthesize Button position in showcase for Synthesizer
+            Button: {
 
                 x: 790,
                 y: 650,
@@ -782,25 +1669,24 @@ LOGICPULSE.Layout = Object.freeze({
                 hoverScale: 1.05,
 
                 width: 160,
-                height: 30,
+                height: 30
 
-            })
+            }
 
-        }),
+        },
 
-        RecipeItemBoxes: Object.freeze({
-
-            firstSlot: Object.freeze({
+        RecipeItemBoxes: {
+            //First Item box position (Recipe) for Synthesizer
+            firstSlot: {
 
                 x: 672,
                 y: 480
 
-            }),
-
+            },
+            //spacing between Recipe Item boxes for Synthesizer
             spacing: 96,
-
-
-            Amount: Object.freeze({
+            //Item amount needed for crafting for Synthesizer
+            Amount: {
 
                 x: 52,
                 y: 70,
@@ -812,9 +1698,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 18
 
-            }),
-
-            ItemName: Object.freeze({
+            },
+            //name of the Recipe items needed for crafting for Synthesizer
+            ItemName: {
 
                 x: 0,
                 y: 0,
@@ -826,13 +1712,13 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 12
 
-            })
+            }
 
-        }),
+        }
 
-        })
+    }
 
-    });
+};
 
 
 //=============================================================================

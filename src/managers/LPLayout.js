@@ -3,49 +3,50 @@
 window.LOGICPULSE = window.LOGICPULSE || {};
 
 //=============================================================================
-// Layout
+// Layout (mutable for parameters)
 //=============================================================================
 
-LOGICPULSE.Layout = Object.freeze({
+LOGICPULSE.Layout = {
 
     //==================================================
     // Inventory Scene
     //==================================================
 
-    Inventory: Object.freeze({
+    Inventory: {
 
-        Grid: Object.freeze({
-
-            rect: Object.freeze({
-
-                x: 82,
-                y: 118,
-                width: 768,
-                height: 576
-
-            }),
-
-            mask: Object.freeze({
+        Grid: {
+            //First Item box position (grid) for inventory
+            rect: {
 
                 x: 82,
                 y: 118,
                 width: 768,
                 height: 576
 
-            }),
+            },
+            //grid Mask position for inventory
+            mask: {
 
-            Icon: Object.freeze({
+                x: 82,
+                y: 118,
+                width: 768,
+                height: 576
 
-                offset: Object.freeze({
+            },
+
+            //position of the item pics in the item box for inventory
+            Icon: {
+
+                offset: {
 
                     x: 0,
 
                     y: 0
 
-                })
+                }
 
-            }),
-
+            },
+            //columns setting for inventory
             columns: 8,
 
             itemSize: 92,
@@ -54,9 +55,9 @@ LOGICPULSE.Layout = Object.freeze({
 
             spacingY: 96
 
-        }),
-
-        Amount: Object.freeze({
+        },
+        //Item amount in party for inventory
+        Amount: {
 
             x: 52,
 
@@ -70,14 +71,14 @@ LOGICPULSE.Layout = Object.freeze({
 
             fontSize: 18
 
-        }),
+        },
 
-        Sidebar: Object.freeze({
-
+        Sidebar: {
+            //sidebar box.png position for both inventory and Synthesizer
             x: 0,
             y: 0,
-
-            tabs: Object.freeze({
+            //sidebar tab icons settings for both inventory and Synthesizer
+            tabs: {
 
                 x: 4,
                 y: 130,
@@ -85,31 +86,32 @@ LOGICPULSE.Layout = Object.freeze({
                 spacing: 52,
 
                 width: 44,
-                height: 44,
+                height: 44
 
-            })
+            }
 
-        }),
+        },
 
-        Showcase: Object.freeze({
 
-            Overlay: Object.freeze({
+        Showcase: {
+            //Item Showcase Box.png position for inventory
+            Overlay: {
 
                 x: 0,
                 y: 0
 
-            }),
-
-            Frame: Object.freeze({
+            },
+            //Showcase Items pics in Item Showcase Box position for inventory
+            Frame: {
 
                 x: 912,
                 y: 144,
                 width: 288,
                 height: 288
 
-            }),
-
-            Item: Object.freeze({
+            },
+            //Showcase Items pics size for inventory
+            Item: {
 
                 width: 184,
                 height: 184,
@@ -117,9 +119,9 @@ LOGICPULSE.Layout = Object.freeze({
                 maxWidth: 184,
                 maxHeight: 184
 
-            }),
-
-            Name: Object.freeze({
+            },
+            //item name position in showcase for inventory
+            Name: {
 
                 x: 912,
                 y: 152,
@@ -130,9 +132,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 24
 
-            }),
-
-            Description: Object.freeze({
+            },
+            //item Description position in showcase for inventory
+            Description: {
 
                 x: 912,
                 y: 460,
@@ -146,9 +148,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 lineHeight: 26
 
-            }),
-
-            Button: Object.freeze({
+            },
+            //Use Button position in showcase for inventory
+            Button: {
 
                 x: 912,
                 y: 640,
@@ -158,53 +160,52 @@ LOGICPULSE.Layout = Object.freeze({
                 hoverScale: 1.05,
 
                 width: 288,
-                height: 48,
+                height: 48
 
-            })
+            }
 
-        }),
+        }
 
-
-    }),
+    },
 
     //==================================================
     // Synthesizer Scene
     //==================================================
 
-    Synthesizer: Object.freeze({
+    Synthesizer: {
 
-        Grid: Object.freeze({
-
-            rect: Object.freeze({
-
-                x: 96,
-                y: 192,
-                width: 384,
-                height: 480
-
-            }),
-
-            mask: Object.freeze({
+        Grid: {
+            //First Item box position (grid) for Synthesizer
+            rect: {
 
                 x: 96,
                 y: 192,
                 width: 384,
                 height: 480
 
-            }),
+            },
+            //grid Mask position for Synthesizer
+            mask: {
 
-            Icon: Object.freeze({
+                x: 96,
+                y: 192,
+                width: 384,
+                height: 480
 
-                offset: Object.freeze({
+            },
+            //position of the item pics in the item box for Synthesizer
+            Icon: {
+
+                offset: {
 
                     x: 0,
 
                     y: 0
 
-                })
+                }
 
-            }),
-
+            },
+            //columns setting for Synthesizer
             columns: 4,
 
             itemSize: 92,
@@ -213,9 +214,9 @@ LOGICPULSE.Layout = Object.freeze({
 
             spacingY: 96
 
-        }),
-
-        Amount: Object.freeze({
+        },
+        //Item amount in party for Synthesizer
+        Amount: {
 
             x: 52,
 
@@ -229,28 +230,27 @@ LOGICPULSE.Layout = Object.freeze({
 
             fontSize: 18
 
-        }),
+        },
 
-
-        Showcase: Object.freeze({
-
-            Overlay: Object.freeze({
+        Showcase: {
+            //Item Showcase Box.png position for Synthesizer
+            Overlay: {
 
                 x: 0,
                 y: 0
 
-            }),
-
-            Frame: Object.freeze({
+            },
+            //Showcase Items pics in Item Showcase Box position for Synthesizer
+            Frame: {
 
                 x: 720,
                 y: 168,
                 width: 288,
                 height: 288
 
-            }),
-
-            Item: Object.freeze({
+            },
+            //Showcase Items pics size for Synthesizer
+            Item: {
 
                 width: 184,
                 height: 184,
@@ -258,9 +258,9 @@ LOGICPULSE.Layout = Object.freeze({
                 maxWidth: 184,
                 maxHeight: 184
 
-            }),
-
-            Name: Object.freeze({
+            },
+            //item name position in showcase for Synthesizer
+            Name: {
 
                 x: 720,
                 y: 170,
@@ -271,9 +271,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 24
 
-            }),
-
-            Description: Object.freeze({
+            },
+            //item Description position in showcase for Synthesizer
+            Description: {
 
                 x: 528,
                 y: 168,
@@ -285,41 +285,40 @@ LOGICPULSE.Layout = Object.freeze({
 
                 padding: 8,
 
-
                 fontSize: 16,
 
                 lineHeight: 26
 
-            }),
-
-            Tip: Object.freeze({
+            },
+            //position of tip.png for Synthesizer
+            Tip: {
 
                 x: 1032,
-                y: 145,
+                y: 145
 
-            }),
-
-            ItemDecrease: Object.freeze({
+            },
+            //position of Item Decrease Arrow pngs for Synthesizer
+            ItemDecrease: {
 
                 x: 768,
                 y: 600,
 
                 width: 27,
-                height: 27,
+                height: 27
 
-            }),
-
-            ItemIncrease: Object.freeze({
+            },
+            //position of Item Increase Arrow pngs for Synthesizer
+            ItemIncrease: {
 
                 x: 930,
                 y: 600,
 
                 width: 27,
-                height: 27,
+                height: 27
 
-            }),
-
-            CurrentNumber: Object.freeze({
+            },
+            //position of Crafting Number for Synthesizer
+            CurrentNumber: {
 
                 x: 822,
                 y: 598,
@@ -331,9 +330,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 28
 
-            }),
-
-            MaxNumber: Object.freeze({
+            },
+            //position of MAx Crafting Number Available for Synthesizer
+            MaxNumber: {
 
                 x: 686,
                 y: 194,
@@ -344,10 +343,9 @@ LOGICPULSE.Layout = Object.freeze({
                 align: "center",
 
                 fontSize: 20
-            }),
-
-
-            Button: Object.freeze({
+            },
+            //Synthesize Button position in showcase for Synthesizer
+            Button: {
 
                 x: 790,
                 y: 650,
@@ -357,25 +355,24 @@ LOGICPULSE.Layout = Object.freeze({
                 hoverScale: 1.05,
 
                 width: 160,
-                height: 30,
+                height: 30
 
-            })
+            }
 
-        }),
+        },
 
-        RecipeItemBoxes: Object.freeze({
-
-            firstSlot: Object.freeze({
+        RecipeItemBoxes: {
+            //First Item box position (Recipe) for Synthesizer
+            firstSlot: {
 
                 x: 672,
                 y: 480
 
-            }),
-
+            },
+            //spacing between Recipe Item boxes for Synthesizer
             spacing: 96,
-
-
-            Amount: Object.freeze({
+            //Item amount needed for crafting for Synthesizer
+            Amount: {
 
                 x: 52,
                 y: 70,
@@ -387,9 +384,9 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 18
 
-            }),
-
-            ItemName: Object.freeze({
+            },
+            //name of the Recipe items needed for crafting for Synthesizer
+            ItemName: {
 
                 x: 0,
                 y: 0,
@@ -401,10 +398,10 @@ LOGICPULSE.Layout = Object.freeze({
 
                 fontSize: 12
 
-            })
+            }
 
-        }),
+        }
 
-        })
+    }
 
-    });
+};
