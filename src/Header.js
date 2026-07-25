@@ -1,6 +1,6 @@
 /*:
  * @target MZ
- * @plugindesc Modern Cyberpunk Inventory UI with full mouse support and crafting.
+ * @plugindesc LOGICPULSE Interactive - Modern Inventory UI with Crafting System for RPG Maker MZ.
  * @author LOGICPULSE
  * @version 1.1.0
  *

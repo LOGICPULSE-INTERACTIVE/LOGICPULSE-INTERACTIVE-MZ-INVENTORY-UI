@@ -2,13 +2,13 @@
 
 module.exports = {
 
-    pluginName: "LOGICPULSE_INTERACTIVE_MZ_INVENTORY_UI",
+    pluginName: "LOGICPULSE_INVENTORY_UI",
 
     version: "0.1.0",
 
     author: "LOGICPULSE",
 
-    description: "Modern Cyberpunk Inventory UI for RPG Maker MZ",
+    description: "Modern Inventory and Crafting UI for RPG Maker MZ",
 
     target: "MZ",
 
@@ -16,7 +16,7 @@ module.exports = {
 
     outputDirectory: "build",
 
-    output: "build/LOGICPULSE_INTERACTIVE_MZ_INVENTORY_UI.js",
+    output: "build/LOGICPULSE_INVENTORY_UI.js",
 
     debug: true
 

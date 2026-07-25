@@ -1,6 +1,6 @@
 /*:
  * @target MZ
- * @plugindesc Modern Cyberpunk Inventory UI for RPG Maker MZ
+ * @plugindesc Modern Inventory and Crafting UI for RPG Maker MZ
  * @author LOGICPULSE
  * @version 0.1.0
  *
@@ -16,7 +16,7 @@
  *
  * Edit the files inside /src instead.
  *
- * Build Date: 2026-07-24T22:46:57.239Z
+ * Build Date: 2026-07-25T16:12:39.433Z
  * ============================================================================
  */
 
@@ -29,9 +29,9 @@
 
 /*:
  * @target MZ
- * @plugindesc Modern Cyberpunk Inventory UI with full mouse support and crafting.
+ * @plugindesc LOGICPULSE Interactive - Modern Inventory UI with Crafting System for RPG Maker MZ.
  * @author LOGICPULSE
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @command OpenInventory
  * @text Open Inventory
@@ -617,7 +617,7 @@ window.LOGICPULSE = window.LOGICPULSE || {};
 
 LOGICPULSE.Version = {
     plugin: "LOGICPULSE_INTERACTIVE_MZ_INVENTORY_UI",
-    version: "0.1.0"
+    version: "1.1.0"
 };
 
 
