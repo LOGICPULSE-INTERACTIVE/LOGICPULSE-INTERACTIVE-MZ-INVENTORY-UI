@@ -2,7 +2,7 @@
  * @target MZ
  * @plugindesc Modern Cyberpunk Inventory UI with full mouse support and crafting.
  * @author LOGICPULSE
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @command OpenInventory
  * @text Open Inventory

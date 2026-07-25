@@ -2,12 +2,11 @@
 // Main.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
+if (!LOGICPULSE.CoreVersion) {
+    throw new Error("LOGICPULSE_Core is required for this plugin.");
+}
 
-// Initialize assets
-LOGICPULSE.Assets.initialize();
-
-// Initialize parameters (after Layout is loaded)
+// Initialize parameters (core already loaded system assets)
 if (LOGICPULSE.Parameters && typeof LOGICPULSE.Parameters.initialize === 'function') {
     LOGICPULSE.Parameters.initialize();
 }

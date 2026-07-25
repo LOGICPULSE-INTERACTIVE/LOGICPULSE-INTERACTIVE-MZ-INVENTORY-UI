@@ -1,33 +1,15 @@
-"use strict";
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-
 //=============================================================================
-// Constants
+// Constants.js
 //=============================================================================
 
-LOGICPULSE.Constants = Object.freeze({
+LOGICPULSE.Constants = LOGICPULSE.Constants || {};
 
-    //--------------------------------
-    // Item Categories
-    //--------------------------------
-
-    Category: Object.freeze({
-
-        Consumable : "consumable",
-
-        Material   : "material",
-
-        Key        : "key",
-
-        HiddenB    : "hiddenB",
-
-        Weapon     : "weapon",
-
-        Armor      : "armor",
-
-        Unknown    : "unknown"
-
-    })
-
+LOGICPULSE.Constants.Category = Object.freeze({
+    Consumable: "consumable",
+    Material: "material",
+    Key: "key",
+    HiddenB: "hiddenB",
+    Weapon: "weapon",
+    Armor: "armor",
+    Unknown: "unknown"
 });

@@ -9,6 +9,7 @@ LOGICPULSE.Scenes.Synthesizer = class extends Scene_MenuBase {
         super.initialize();
         this._selectedItem = null;
         this._lastSelectedIndex = -1;
+        this._lastClickTime = null
     }
 
     create() {
@@ -146,20 +147,51 @@ LOGICPULSE.Scenes.Synthesizer = class extends Scene_MenuBase {
     update() {
         super.update();
 
+        // ---- CLICK DETECTION (before Mouse consumes trigger) ----
+        if (TouchInput.isTriggered()) {
+            const x = TouchInput.x;
+            const y = TouchInput.y;
+            const grid = this._craftGrid;
+            if (grid) {
+                const slot = grid.getSlotAt(x, y);
+                if (slot && slot.entry() && LOGICPULSE.RecipeManager.canCraft(slot.entry().item)) {
+                    const currentIndex = grid.selectedIndex();
+                    const slotIndex = grid._slots.indexOf(slot);
+                    if (slotIndex === currentIndex) {
+                        // Clicked on the already selected slot → enter craft mode
+                        if (this._controller) {
+                            this._controller.onConfirm();
+                        }
+                    } else {
+                        // Clicked on a different slot → select it
+                        grid.setSelectedIndex(slotIndex);
+                        if (this._controller) {
+                            this._controller.onSelectionChanged();
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- MOUSE MANAGER ----
         LOGICPULSE.Mouse.update();
 
+        // ---- SIDEBAR ----
         if (this._sidebar && typeof this._sidebar.processMouseInput === 'function') {
             this._sidebar.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- QUANTITY CONTROLLER ----
         if (this._quantityController && typeof this._quantityController.processMouseInput === 'function') {
             this._quantityController.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- CRAFT BUTTON ----
         if (this._craftButton && typeof this._craftButton.processMouseInput === 'function') {
             this._craftButton.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- CONTROLLERS ----
         if (this._controller) this._controller.update();
         if (this._craftGrid) this._craftGrid.update();
         if (this._sidebar) this._sidebar.update();

@@ -7,7 +7,7 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Grid Slot
 //=============================================================================
 
-LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
+LOGICPULSE.UI.InventoryGridSlot = class extends LOGICPULSE.UI.Element {
 
     constructor(options = {}) {
 

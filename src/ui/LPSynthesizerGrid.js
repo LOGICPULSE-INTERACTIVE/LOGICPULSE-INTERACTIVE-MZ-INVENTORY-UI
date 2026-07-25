@@ -7,7 +7,7 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Synthesizer Grid
 //=============================================================================
 
-LOGICPULSE.UI.SynthesizerGrid = class extends LOGICPULSE.UI.Grid {
+LOGICPULSE.UI.SynthesizerGrid = class extends LOGICPULSE.UI.InventoryGrid {
 
 
     //--------------------------------

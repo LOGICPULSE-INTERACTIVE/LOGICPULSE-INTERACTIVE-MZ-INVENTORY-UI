@@ -16,7 +16,7 @@
  *
  * Edit the files inside /src instead.
  *
- * Build Date: 2026-07-17T05:03:33.577Z
+ * Build Date: 2026-07-24T22:46:57.239Z
  * ============================================================================
  */
 
@@ -625,36 +625,20 @@ LOGICPULSE.Version = {
 // Constants.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
-
 //=============================================================================
-// Constants
+// Constants.js
 //=============================================================================
 
-LOGICPULSE.Constants = Object.freeze({
+LOGICPULSE.Constants = LOGICPULSE.Constants || {};
 
-    //--------------------------------
-    // Item Categories
-    //--------------------------------
-
-    Category: Object.freeze({
-
-        Consumable : "consumable",
-
-        Material   : "material",
-
-        Key        : "key",
-
-        HiddenB    : "hiddenB",
-
-        Weapon     : "weapon",
-
-        Armor      : "armor",
-
-        Unknown    : "unknown"
-
-    })
-
+LOGICPULSE.Constants.Category = Object.freeze({
+    Consumable: "consumable",
+    Material: "material",
+    Key: "key",
+    HiddenB: "hiddenB",
+    Weapon: "weapon",
+    Armor: "armor",
+    Unknown: "unknown"
 });
 
 
@@ -662,349 +646,64 @@ LOGICPULSE.Constants = Object.freeze({
 // LPAssets.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
-
 //=============================================================================
-// Asset Manager
+// LPAssets.js (plugin-specific folders/images & parameters)
 //=============================================================================
 
-LOGICPULSE.Assets = {
-
-    //==================================================
-    // System Assets
-    //==================================================
-
-    IconSet: null,
-
-    //==================================================
-    // Folder Definitions
-    //==================================================
-
-    Folders: Object.freeze({
-
-        Inventory: "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/",
-
-        Sidebar: "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Sidebar/",
-
-        Items: "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Items/",
-
-        Showcase: "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Items_Show_Case/",
-
-        Synthesizer: "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Synthesizer/"
-
-    }),
-
-    //==================================================
-    // Image Catalog
-    //==================================================
-
-    Images: Object.freeze({
-
-        Inventory: Object.freeze({
-
-            Background: "Background",
-
-            Showcase: "Item Showcase Box",
-
-            UseButtonIdle: "Use Button Idle",
-            UseButtonHover: "Use Button Hover",
-
-            ItemBoxCommon: "Item Box Common",
-            ItemBoxRare: "Item Box Rare",
-            ItemBoxLegendary: "Item Box Legendary",
-
-            SelectionFrame: "Selection Frame",
-
-        }),
-
-        Sidebar: Object.freeze({
-
-            Box: "Sidebar box",
-
-            ConsumableIdle: "Sidebar Consumable Tab Idle",
-            ConsumableHover: "Sidebar Consumable Tab Hover",
-            ConsumableHeader: "Frame Consumables",
-
-            MaterialIdle: "Sidebar Material Tab Idle",
-            MaterialHover: "Sidebar Material Tab Hover",
-            MaterialHeader: "Frame Materials",
-
-            KeyMaterialIdle: "Sidebar Key Materials Tab Idle",
-            KeyMaterialHover: "Sidebar Key Materials Tab Hover",
-            KeyMaterialHeader: "Frame Key Materials",
-
-            SynthesizerIdle: "Sidebar Synthesizer Tab Idle",
-            SynthesizerHover: "Sidebar Synthesizer Tab Hover",
-            SynthesizerHeader:"Frame Synthesizer",
-
-            KeyboardTABKeyIdle:"Sidebar Tab keyboard Key Idle",
-            KeyboardTABKeyHover: "Sidebar Tab keyboard Key Hover",
-
-        }),
-
-        Synthesizer: Object.freeze({
-
-            Background: "Background",
-
-            Showcase: "Item Showcase Box",
-            SynthesizeTip: "Tip",
-
-            RecipeItemBoxes: "Empty Item boxes",
-
-            ItemDecreaseInactive: "Item Decrease Arrow Inactive",
-            ItemDecreaseActive: "Item Decrease Arrow Active",
-            ItemIncreaseInactive: "Item Increase Arrow Inactive",
-            ItemIncreaseActive: "Item Increase Arrow Active",
-
-            SynthesizeHover: "Synthesize Button Hover",
-            SynthesizeIdle: "Synthesize Button Idle",
-
-            SelectedFrame: "Selected Frame",
-            SelectionFrame: "Selection Frame",
-
-        })
-
-    }),
-
-    //==================================================
-    // Bitmap Cache
-    //==================================================
-
-    _cache: {},
-
-    //==================================================
-    // Initialize
-    //==================================================
-
-    initialize() {
-
-        this.loadSystemAssets();
-
-    },
-
-    //==================================================
-    // Load System Assets
-    //==================================================
-
-    loadSystemAssets() {
-
-        this.IconSet = ImageManager.loadSystem(
-
-            "IconSet"
-
-        );
-
-    },
-
-    //==================================================
-    // Load Bitmap
-    //==================================================
-
-    load(folder, filename) {
-
-        if (!Object.values(this.Folders).includes(folder)) {
-
-            throw new Error(
-
-                `[LOGICPULSE] Unknown asset folder:\n${folder}`
-
-            );
-
-        }
-
-        const key = `${folder}${filename}`;
-
-        if (!this._cache[key]) {
-
-            this._cache[key] = ImageManager.loadBitmap(
-
-                folder,
-                filename
-
-            );
-
-        }
-
-        return this._cache[key];
-
-    },
-
-    //==================================================
-    // Exists
-    //==================================================
-
-    exists(folder, filename) {
-
-        try {
-
-            return !!this.load(
-
-                folder,
-                filename
-
-            );
-
-        }
-        catch (e) {
-
-            return false;
-
-        }
-
-    },
-
-    //==================================================
-    // Preload
-    //==================================================
-
-    preload(list) {
-
-        for (const asset of list) {
-
-            this.load(
-
-                asset.folder,
-                asset.file
-
-            );
-
-        }
-
-    },
-
-
-
-    //==================================================
-    // Create Sprite
-    //==================================================
-
-    createSprite(folder, filename) {
-
-        const sprite = new Sprite();
-
-        sprite.bitmap = this.load(
-
-            folder,
-            filename
-
-        );
-
-        return sprite;
-
-    },
-
-    //==================================================
-    // Create Showcase Item Sprite
-    //==================================================
-
-    createShowcaseItemSprite(item) {
-
-        if (!item) {
-
-            return new Sprite();
-
-        }
-
-        return this.createSprite(
-
-            this.Folders.Showcase,
-
-            `Item_${item.iconIndex}`
-
-        );
-
-    },
-
-    //==================================================
-    // Create Inventory Item Sprite (HD)
-    //==================================================
-
-    createItemSprite(item) {
-
-        if (!item) {
-
-            return new Sprite();
-
-        }
-
-        return this.createSprite(
-
-            this.Folders.Items,
-
-            `Item_${item.iconIndex}`
-
-        );
-
-    },
-
-
-
-    //==================================================
-    // Create RPG Maker Icon
-    //==================================================
-
-    createIcon(iconIndex) {
-
-        const sprite = new Sprite(
-
-            this.IconSet
-
-        );
-
-        const rect = this.iconRect(
-
-            iconIndex
-
-        );
-
-        sprite.setFrame(
-
-            rect.x,
-            rect.y,
-            rect.width,
-            rect.height
-
-        );
-
-        return sprite;
-
-    },
-
-    //==================================================
-    // Icon Rectangle
-    //==================================================
-
-    iconRect(iconIndex) {
-
-        const width = ImageManager.iconWidth;
-
-        const height = ImageManager.iconHeight;
-
-        return {
-
-            x: (iconIndex % 16) * width,
-
-            y: Math.floor(iconIndex / 16) * height,
-
-            width: width,
-
-            height: height
-
-        };
-
-    },
-
-    //==================================================
-    // Clear Cache
-    //==================================================
-
-    clearCache() {
-
-        this._cache = {};
-
-    }
-
+// Augment core's Assets with our own folders and images
+LOGICPULSE.Assets.Folders = LOGICPULSE.Assets.Folders || {};
+LOGICPULSE.Assets.Folders.Inventory = "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/";
+LOGICPULSE.Assets.Folders.Sidebar = "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Sidebar/";
+LOGICPULSE.Assets.Folders.Items = "img/LOGICPULSE_INTERACTIVE UI/Items/";
+LOGICPULSE.Assets.Folders.Showcase = "img/LOGICPULSE_INTERACTIVE UI/Items_Show_Case/";
+LOGICPULSE.Assets.Folders.Synthesizer = "img/LOGICPULSE_INTERACTIVE UI/INVENTORY_UI/Synthesizer/";
+
+LOGICPULSE.Assets.Images = LOGICPULSE.Assets.Images || {};
+LOGICPULSE.Assets.Images.Inventory = {
+    Background: "Background",
+    Showcase: "Item Showcase Box",
+    UseButtonIdle: "Use Button Idle",
+    UseButtonHover: "Use Button Hover",
+    ItemBoxCommon: "Item Box Common",
+    ItemBoxRare: "Item Box Rare",
+    ItemBoxLegendary: "Item Box Legendary",
+    SelectionFrame: "Selection Frame"
 };
+LOGICPULSE.Assets.Images.Sidebar = {
+    Box: "Sidebar box",
+    ConsumableIdle: "Sidebar Consumable Tab Idle",
+    ConsumableHover: "Sidebar Consumable Tab Hover",
+    ConsumableHeader: "Frame Consumables",
+    MaterialIdle: "Sidebar Material Tab Idle",
+    MaterialHover: "Sidebar Material Tab Hover",
+    MaterialHeader: "Frame Materials",
+    KeyMaterialIdle: "Sidebar Key Materials Tab Idle",
+    KeyMaterialHover: "Sidebar Key Materials Tab Hover",
+    KeyMaterialHeader: "Frame Key Materials",
+    SynthesizerIdle: "Sidebar Synthesizer Tab Idle",
+    SynthesizerHover: "Sidebar Synthesizer Tab Hover",
+    SynthesizerHeader: "Frame Synthesizer",
+    KeyboardTABKeyIdle: "Sidebar Tab keyboard Key Idle",
+    KeyboardTABKeyHover: "Sidebar Tab keyboard Key Hover"
+};
+LOGICPULSE.Assets.Images.Synthesizer = {
+    Background: "Background",
+    Showcase: "Item Showcase Box",
+    SynthesizeTip: "Tip",
+    RecipeItemBoxes: "Empty Item boxes",
+    ItemDecreaseInactive: "Item Decrease Arrow Inactive",
+    ItemDecreaseActive: "Item Decrease Arrow Active",
+    ItemIncreaseInactive: "Item Increase Arrow Inactive",
+    ItemIncreaseActive: "Item Increase Arrow Active",
+    SynthesizeHover: "Synthesize Button Hover",
+    SynthesizeIdle: "Synthesize Button Idle",
+    SelectedFrame: "Selected Frame",
+    SelectionFrame: "Selection Frame"
+};
+
+// Plugin-specific parameters – we keep the original LPParameters.js logic,
+// but we need to ensure it uses the augmented Layout.
+// No need to store params here; LPParameters will handle them.
 
 
 //=============================================================================
@@ -1322,541 +1021,81 @@ LOGICPULSE.Parameters = {
 // LPLayout.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
-
 //=============================================================================
-// Layout (mutable for parameters)
+// LPLayout.js
 //=============================================================================
 
-LOGICPULSE.Layout = {
+LOGICPULSE.Layout = LOGICPULSE.Layout || {};
 
-    //==================================================
-    // Inventory Scene
-    //==================================================
-
-    Inventory: {
-
-        Grid: {
-            //First Item box position (grid) for inventory
-            rect: {
-
-                x: 82,
-                y: 118,
-                width: 768,
-                height: 576
-
-            },
-            //grid Mask position for inventory
-            mask: {
-
-                x: 82,
-                y: 118,
-                width: 768,
-                height: 576
-
-            },
-
-            //position of the item pics in the item box for inventory
-            Icon: {
-
-                offset: {
-
-                    x: 0,
-
-                    y: 0
-
-                }
-
-            },
-            //columns setting for inventory
-            columns: 8,
-
-            itemSize: 92,
-
-            spacingX: 96,
-
-            spacingY: 96
-
-        },
-        //Item amount in party for inventory
-        Amount: {
-
-            x: 52,
-
-            y: 4,
-
-            width: 36,
-
-            height: 20,
-
-            align: "right",
-
-            fontSize: 18
-
-        },
-
-        Sidebar: {
-            //sidebar box.png position for both inventory and Synthesizer
-            x: 0,
-            y: 0,
-            //sidebar tab icons settings for both inventory and Synthesizer
-            tabs: {
-
-                x: 4,
-                y: 130,
-
-                spacing: 52,
-
-                width: 44,
-                height: 44
-
-            }
-
-        },
-
-
-        Showcase: {
-            //Item Showcase Box.png position for inventory
-            Overlay: {
-
-                x: 0,
-                y: 0
-
-            },
-            //Showcase Items pics in Item Showcase Box position for inventory
-            Frame: {
-
-                x: 912,
-                y: 144,
-                width: 288,
-                height: 288
-
-            },
-            //Showcase Items pics size for inventory
-            Item: {
-
-                width: 184,
-                height: 184,
-
-                maxWidth: 184,
-                maxHeight: 184
-
-            },
-            //item name position in showcase for inventory
-            Name: {
-
-                x: 912,
-                y: 152,
-                width: 288,
-                height: 32,
-
-                align: "center",
-
-                fontSize: 24
-
-            },
-            //item Description position in showcase for inventory
-            Description: {
-
-                x: 912,
-                y: 460,
-
-                width: 288,
-                height: 160,
-
-                padding: 8,
-
-                fontSize: 20,
-
-                lineHeight: 26
-
-            },
-            //Use Button position in showcase for inventory
-            Button: {
-
-                x: 912,
-                y: 640,
-
-                scale: 1.0,
-
-                hoverScale: 1.05,
-
-                width: 288,
-                height: 48
-
-            }
-
-        }
-
+LOGICPULSE.Layout.Inventory = {
+    Grid: {
+        rect: { x: 82, y: 118, width: 768, height: 576 },
+        mask: { x: 82, y: 118, width: 768, height: 576 },
+        Icon: { offset: { x: 0, y: 0 } },
+        columns: 8,
+        itemSize: 92,
+        spacingX: 96,
+        spacingY: 96
     },
-
-    //==================================================
-    // Synthesizer Scene
-    //==================================================
-
-    Synthesizer: {
-
-        Grid: {
-            //First Item box position (grid) for Synthesizer
-            rect: {
-
-                x: 96,
-                y: 192,
-                width: 384,
-                height: 480
-
-            },
-            //grid Mask position for Synthesizer
-            mask: {
-
-                x: 96,
-                y: 192,
-                width: 384,
-                height: 480
-
-            },
-            //position of the item pics in the item box for Synthesizer
-            Icon: {
-
-                offset: {
-
-                    x: 0,
-
-                    y: 0
-
-                }
-
-            },
-            //columns setting for Synthesizer
-            columns: 4,
-
-            itemSize: 92,
-
-            spacingX: 96,
-
-            spacingY: 96
-
-        },
-        //Item amount in party for Synthesizer
-        Amount: {
-
-            x: 52,
-
-            y: 4,
-
-            width: 36,
-
-            height: 20,
-
-            align: "right",
-
-            fontSize: 18
-
-        },
-
-        Showcase: {
-            //Item Showcase Box.png position for Synthesizer
-            Overlay: {
-
-                x: 0,
-                y: 0
-
-            },
-            //Showcase Items pics in Item Showcase Box position for Synthesizer
-            Frame: {
-
-                x: 720,
-                y: 168,
-                width: 288,
-                height: 288
-
-            },
-            //Showcase Items pics size for Synthesizer
-            Item: {
-
-                width: 184,
-                height: 184,
-
-                maxWidth: 184,
-                maxHeight: 184
-
-            },
-            //item name position in showcase for Synthesizer
-            Name: {
-
-                x: 720,
-                y: 170,
-                width: 288,
-                height: 32,
-
-                align: "center",
-
-                fontSize: 24
-
-            },
-            //item Description position in showcase for Synthesizer
-            Description: {
-
-                x: 528,
-                y: 168,
-
-                width: 180,
-                height: 300,
-
-                align: "center",
-
-                padding: 8,
-
-                fontSize: 16,
-
-                lineHeight: 26
-
-            },
-            //position of tip.png for Synthesizer
-            Tip: {
-
-                x: 1032,
-                y: 145
-
-            },
-            //position of Item Decrease Arrow pngs for Synthesizer
-            ItemDecrease: {
-
-                x: 768,
-                y: 600,
-
-                width: 27,
-                height: 27
-
-            },
-            //position of Item Increase Arrow pngs for Synthesizer
-            ItemIncrease: {
-
-                x: 930,
-                y: 600,
-
-                width: 27,
-                height: 27
-
-            },
-            //position of Crafting Number for Synthesizer
-            CurrentNumber: {
-
-                x: 822,
-                y: 598,
-
-                width: 80,
-                height: 32,
-
-                align: "center",
-
-                fontSize: 28
-
-            },
-            //position of MAx Crafting Number 3. for Synthesizer
-            MaxNumber: {
-
-                x: 686,
-                y: 194,
-
-                width: 80,
-                height: 32,
-
-                align: "center",
-
-                fontSize: 20
-            },
-            //Synthesize Button position in showcase for Synthesizer
-            Button: {
-
-                x: 790,
-                y: 650,
-
-                scale: 1.0,
-
-                hoverScale: 1.05,
-
-                width: 160,
-                height: 30
-
-            }
-
-        },
-
-        RecipeItemBoxes: {
-            //First Item box position (Recipe) for Synthesizer
-            firstSlot: {
-
-                x: 672,
-                y: 480
-
-            },
-            //spacing between Recipe Item boxes for Synthesizer
-            spacing: 96,
-            //Item amount needed for crafting for Synthesizer
-            Amount: {
-
-                x: 52,
-                y: 70,
-
-                width: 36,
-                height: 20,
-
-                align: "right",
-
-                fontSize: 18
-
-            },
-            //name of the Recipe items needed for crafting for Synthesizer
-            ItemName: {
-
-                x: 0,
-                y: 0,
-
-                width: 92,
-                height: 92,
-
-                align: "center",
-
-                fontSize: 12
-
-            }
-
+    Amount: {
+        x: 52, y: 4,
+        width: 36, height: 20,
+        align: "right",
+        fontSize: 18
+    },
+    Sidebar: {
+        x: 0, y: 0,
+        tabs: {
+            x: 4, y: 130,
+            spacing: 52,
+            width: 44, height: 44
         }
-
+    },
+    Showcase: {
+        Overlay: { x: 0, y: 0 },
+        Frame: { x: 912, y: 144, width: 288, height: 288 },
+        Item: { width: 184, height: 184, maxWidth: 184, maxHeight: 184 },
+        Name: { x: 912, y: 152, width: 288, height: 32, align: "center", fontSize: 24 },
+        Description: { x: 912, y: 460, width: 288, height: 160, padding: 8, fontSize: 20, lineHeight: 26 },
+        Button: { x: 912, y: 640, scale: 1.0, hoverScale: 1.05, width: 288, height: 48 }
     }
-
 };
 
-
-//=============================================================================
-// LPInput.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-
-//=============================================================================
-// Input Manager
-//=============================================================================
-
-LOGICPULSE.Input = {
-
-    //--------------------------------
-    // Triggered
-    //--------------------------------
-
-    isTriggered(binding) {
-
-        if (!binding) {
-
-            return false;
-
-        }
-
-        if (
-
-            binding.modifier &&
-
-            !Input.isPressed(binding.modifier)
-
-        ) {
-
-            return false;
-
-        }
-
-        return Input.isTriggered(
-
-            binding.key
-
-        );
-
+LOGICPULSE.Layout.Synthesizer = {
+    Grid: {
+        rect: { x: 96, y: 192, width: 384, height: 480 },
+        mask: { x: 96, y: 192, width: 384, height: 480 },
+        Icon: { offset: { x: 0, y: 0 } },
+        columns: 4,
+        itemSize: 92,
+        spacingX: 96,
+        spacingY: 96
     },
-
-    //--------------------------------
-    // Repeated
-    //--------------------------------
-
-    isRepeated(binding) {
-
-        if (!binding) {
-
-            return false;
-
-        }
-
-        if (
-
-            binding.modifier &&
-
-            !Input.isPressed(binding.modifier)
-
-        ) {
-
-            return false;
-
-        }
-
-        return Input.isRepeated(
-
-            binding.key
-
-        );
-
+    Amount: {
+        x: 52, y: 4,
+        width: 36, height: 20,
+        align: "right",
+        fontSize: 18
     },
-
-    //--------------------------------
-    // Pressed
-    //--------------------------------
-
-    isPressed(binding) {
-
-        if (!binding) {
-
-            return false;
-
-        }
-
-        if (
-
-            binding.modifier &&
-
-            !Input.isPressed(binding.modifier)
-
-        ) {
-
-            return false;
-
-        }
-
-        return Input.isPressed(
-
-            binding.key
-
-        );
-
+    Showcase: {
+        Overlay: { x: 0, y: 0 },
+        Frame: { x: 720, y: 168, width: 288, height: 288 },
+        Item: { width: 184, height: 184, maxWidth: 184, maxHeight: 184 },
+        Name: { x: 720, y: 170, width: 288, height: 32, align: "center", fontSize: 24 },
+        Description: { x: 528, y: 168, width: 180, height: 300, align: "center", padding: 8, fontSize: 16, lineHeight: 26 },
+        Tip: { x: 1032, y: 145 },
+        ItemDecrease: { x: 768, y: 600, width: 27, height: 27 },
+        ItemIncrease: { x: 930, y: 600, width: 27, height: 27 },
+        CurrentNumber: { x: 822, y: 598, width: 80, height: 32, align: "center", fontSize: 28 },
+        MaxNumber: { x: 686, y: 194, width: 80, height: 32, align: "center", fontSize: 20 },
+        Button: { x: 790, y: 650, scale: 1.0, hoverScale: 1.05, width: 160, height: 30 }
     },
-
-    //--------------------------------
-    // Binding Key
-    //--------------------------------
-
-    key(binding) {
-
-        return binding?.key ?? "";
-
-    },
-
-    //--------------------------------
-    // Binding Name
-    //--------------------------------
-
-    name(binding) {
-
-        return binding?.name ?? "";
-
+    RecipeItemBoxes: {
+        firstSlot: { x: 672, y: 480 },
+        spacing: 96,
+        Amount: { x: 52, y: 70, width: 36, height: 20, align: "right", fontSize: 18 },
+        ItemName: { x: 0, y: 0, width: 92, height: 92, align: "center", fontSize: 12 }
     }
-
 };
 
 
@@ -1864,485 +1103,21 @@ LOGICPULSE.Input = {
 // LPBindings.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
-
 //=============================================================================
-// Input Bindings
+// LPBindings.js
 //=============================================================================
 
-LOGICPULSE.Bindings = Object.freeze({
-
-    MoveLeft: Object.freeze({
-
-        action: "moveLeft",
-        key: "left",
-        name: "Move Left"
-
-    }),
-
-    MoveRight: Object.freeze({
-
-        action: "moveRight",
-        key: "right",
-        name: "Move Right"
-
-    }),
-
-    MoveUp: Object.freeze({
-
-        action: "moveUp",
-        key: "up",
-        name: "Move Up"
-
-    }),
-
-    MoveDown: Object.freeze({
-
-        action: "moveDown",
-        key: "down",
-        name: "Move Down"
-
-    }),
-
-    Confirm: Object.freeze({
-
-        action: "confirm",
-        key: "ok",
-        name: "Confirm"
-
-    }),
-
-    Cancel: Object.freeze({
-
-        action: "cancel",
-        key: "cancel",
-        name: "Cancel"
-
-    }),
-
-    NextCategory: Object.freeze({
-
-        action: "nextCategory",
-        key: "tab",
-        name: "Next Category"
-
-    }),
-
-    PreviousCategory: Object.freeze({
-
-        action: "previousCategory",
-        key: "tab",
-        modifier: "shift",
-        name: "Previous Category"
-
-    })
-
-
+LOGICPULSE.Bindings = LOGICPULSE.Bindings || {};
+Object.assign(LOGICPULSE.Bindings, {
+    MoveLeft: { action: "moveLeft", key: "left", name: "Move Left" },
+    MoveRight: { action: "moveRight", key: "right", name: "Move Right" },
+    MoveUp: { action: "moveUp", key: "up", name: "Move Up" },
+    MoveDown: { action: "moveDown", key: "down", name: "Move Down" },
+    Confirm: { action: "confirm", key: "ok", name: "Confirm" },
+    Cancel: { action: "cancel", key: "cancel", name: "Cancel" },
+    NextCategory: { action: "nextCategory", key: "tab", name: "Next Category" },
+    PreviousCategory: { action: "previousCategory", key: "tab", modifier: "shift", name: "Previous Category" }
 });
-
-
-//=============================================================================
-// LPMouse.js
-//=============================================================================
-
-//=============================================================================
-// LPMouse.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-
-//=============================================================================
-// Mouse Manager - Uses RPG Maker's TouchInput for coordinates
-//=============================================================================
-
-LOGICPULSE.Mouse = {
-
-    //--------------------------------
-    // State
-    //--------------------------------
-
-    _x: 0,
-    _y: 0,
-    _hoveredElement: null,
-    _pressedElement: null,
-    _draggedElement: null,
-    _dragOffsetX: 0,
-    _dragOffsetY: 0,
-    _mouseDownX: 0,
-    _mouseDownY: 0,
-    _clickThreshold: 5,
-    _isDragging: false,
-    _initialized: false,
-    _wheelDelta: 0,
-    _pendingUse: false,
-
-    //--------------------------------
-    // Initialize
-    //--------------------------------
-
-    initialize: function() {
-        if (this._initialized) return;
-        this._initialized = true;
-        console.log('[LOGICPULSE.Mouse] Initialized');
-
-        this._patchTouchInput();
-        document.addEventListener('wheel', this._onWheel.bind(this), { passive: true });
-        document.addEventListener('mousedown', this._onMouseDown.bind(this));
-        document.addEventListener('mouseup', this._onMouseUp.bind(this));
-    },
-
-    //--------------------------------
-    // Patch TouchInput
-    //--------------------------------
-
-    _patchTouchInput: function() {
-        var originalUpdate = TouchInput.update;
-        var self = this;
-
-        TouchInput.update = function() {
-            originalUpdate.call(this);
-            self._updateFromTouchInput();
-        };
-    },
-
-    //--------------------------------
-    // Update from TouchInput
-    //--------------------------------
-
-    _updateFromTouchInput: function() {
-        this._x = TouchInput.x;
-        this._y = TouchInput.y;
-        this._processHover();
-    },
-
-    //--------------------------------
-    // Wheel Event
-    //--------------------------------
-
-    _onWheel: function(e) {
-        this._wheelDelta = e.deltaY > 0 ? 1 : -1;
-        this._processScroll();
-    },
-
-    //--------------------------------
-    // Mouse Down/Up
-    //--------------------------------
-
-    _onMouseDown: function(e) {
-        var buttonMap = { 0: 'left', 1: 'middle', 2: 'right' };
-        var button = buttonMap[e.button];
-        if (!button) return;
-
-        this._mouseDownX = this._x;
-        this._mouseDownY = this._y;
-        this._isDragging = false;
-
-        this._processClickDown(button);
-    },
-
-    _onMouseUp: function(e) {
-        var buttonMap = { 0: 'left', 1: 'middle', 2: 'right' };
-        var button = buttonMap[e.button];
-        if (!button) return;
-
-        this._processClickUp(button);
-
-        if (this._isDragging && this._draggedElement) {
-            this._endDrag();
-        }
-        this._isDragging = false;
-        this._draggedElement = null;
-        this._pendingUse = false;
-    },
-
-    //--------------------------------
-    // Process Hover (visual only, no selection change)
-    //--------------------------------
-
-    _processHover: function() {
-        if (!SceneManager || !SceneManager._scene) return;
-        var scene = SceneManager._scene;
-
-        var grid = scene._grid || scene._craftGrid;
-        if (!grid) return;
-
-        if (typeof grid.getSlotAt !== 'function') return;
-
-        var slot = grid.getSlotAt(this._x, this._y);
-
-        if (slot !== this._hoveredElement) {
-            if (this._hoveredElement && this._hoveredElement._onMouseExit) {
-                this._hoveredElement._onMouseExit();
-            }
-            this._hoveredElement = slot;
-            if (this._hoveredElement && this._hoveredElement._onMouseEnter) {
-                this._hoveredElement._onMouseEnter();
-            }
-        }
-    },
-
-    //--------------------------------
-    // Process Click Down
-    //--------------------------------
-
-    _processClickDown: function(button) {
-        if (!SceneManager || !SceneManager._scene) return;
-        var scene = SceneManager._scene;
-
-        var grid = scene._grid || scene._craftGrid;
-        if (!grid) return;
-
-        var slot = this._hoveredElement;
-        if (!slot) return;
-
-        this._pressedElement = slot;
-
-        var index = grid._slots.indexOf(slot);
-        if (index < 0) return;
-
-        var currentSelected = grid.selectedIndex();
-
-        if (button === 'left') {
-            if (currentSelected === index) {
-                this._pendingUse = true;
-            } else {
-                this._pendingUse = false;
-                grid.setSelectedIndex(index);
-                if (scene._controller && scene._controller.onSelectionChanged) {
-                    scene._controller.onSelectionChanged();
-                }
-                this._draggedElement = slot;
-                this._dragOffsetX = this._x - slot.x;
-                this._dragOffsetY = this._y - slot.y;
-                this._isDragging = false;
-            }
-        } else if (button === 'right') {
-            this._pendingUse = false;
-            grid.setSelectedIndex(index);
-            if (scene._controller && scene._controller.onSelectionChanged) {
-                scene._controller.onSelectionChanged();
-            }
-        } else {
-            this._pendingUse = false;
-            grid.setSelectedIndex(index);
-            if (scene._controller && scene._controller.onSelectionChanged) {
-                scene._controller.onSelectionChanged();
-            }
-        }
-
-        if (slot._onMouseDown) {
-            slot._onMouseDown(button, this._x, this._y);
-        }
-    },
-
-    //--------------------------------
-    // Process Click Up
-    //--------------------------------
-
-    _processClickUp: function(button) {
-        if (!SceneManager || !SceneManager._scene) return;
-        var scene = SceneManager._scene;
-
-        var grid = scene._grid || scene._craftGrid;
-        if (!grid) return;
-
-        var slot = this._hoveredElement;
-
-        var dx = this._x - this._mouseDownX;
-        var dy = this._y - this._mouseDownY;
-        var distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < this._clickThreshold && slot && slot === this._pressedElement) {
-            if (button === 'left' && this._pendingUse) {
-                this._handleUseItem(slot, grid);
-                this._pendingUse = false;
-            } else if (button === 'left') {
-                if (scene._controller && scene._controller.onSelectionChanged) {
-                    scene._controller.onSelectionChanged();
-                }
-            } else if (button === 'right') {
-                if (scene._controller && scene._controller.onSelectionChanged) {
-                    scene._controller.onSelectionChanged();
-                }
-            }
-        }
-
-        this._pressedElement = null;
-        if (button === 'left' && this._pendingUse) {
-            this._pendingUse = false;
-        }
-    },
-
-    //--------------------------------
-    // Handle Use Item
-    //--------------------------------
-
-    _handleUseItem: function(slot, grid) {
-        var scene = SceneManager._scene;
-        if (scene && scene._controller && scene._controller.onConfirm) {
-            scene._controller.onConfirm();
-        }
-    },
-
-    //--------------------------------
-    // Drag
-    //--------------------------------
-
-    _processDrag: function() {
-        var dx = this._x - this._mouseDownX;
-        var dy = this._y - this._mouseDownY;
-        var distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance > this._clickThreshold && !this._isDragging) {
-            this._isDragging = true;
-            this._onDragStart();
-        }
-
-        if (this._isDragging && this._draggedElement) {
-            this._onDragMove();
-        }
-    },
-
-    _onDragStart: function() {
-        if (this._draggedElement && this._draggedElement._onDragStart) {
-            this._draggedElement._onDragStart(this._x, this._y);
-        }
-    },
-
-    _onDragMove: function() {
-        if (this._draggedElement && this._draggedElement._onDragMove) {
-            this._draggedElement._onDragMove(this._x, this._y);
-        }
-    },
-
-    _endDrag: function() {
-        if (this._draggedElement && this._draggedElement._onDragEnd) {
-            this._draggedElement._onDragEnd(this._x, this._y);
-        }
-    },
-
-    //--------------------------------
-    // Process Scroll (with description text priority)
-    //--------------------------------
-
-    _processScroll: function() {
-        if (!SceneManager || !SceneManager._scene) return;
-        var scene = SceneManager._scene;
-
-        // Check if mouse is over the description text
-        var descriptionText = this._getDescriptionText(scene);
-        if (descriptionText && this._isOverDescription(descriptionText)) {
-            // Scroll the description text
-            var scrolled = this._scrollDescription(descriptionText, this._wheelDelta);
-            if (scrolled) {
-                this._wheelDelta = 0;
-                return; // Description text handled the scroll
-            }
-            // If description can't scroll further, fall through to grid
-        }
-
-        // Scroll the grid
-        var grid = scene._grid || scene._craftGrid;
-        if (!grid || !grid._layout) return;
-
-        var columns = grid._layout.columns;
-        if (this._wheelDelta > 0) {
-            for (var i = 0; i < columns; i++) {
-                grid.moveDown();
-            }
-        } else if (this._wheelDelta < 0) {
-            for (var j = 0; j < columns; j++) {
-                grid.moveUp();
-            }
-        }
-
-        if (scene._controller && scene._controller.onSelectionChanged) {
-            scene._controller.onSelectionChanged();
-        }
-
-        this._wheelDelta = 0;
-    },
-
-    //--------------------------------
-    // Helper: Get description text from scene
-    //--------------------------------
-
-    _getDescriptionText: function(scene) {
-        // Try inventory showcase
-        if (scene._showcase && scene._showcase._descriptionText) {
-            return scene._showcase._descriptionText;
-        }
-        // Try synthesizer showcase
-        if (scene._showcase && scene._showcase._descriptionText) {
-            return scene._showcase._descriptionText;
-        }
-        return null;
-    },
-
-    //--------------------------------
-    // Helper: Check if mouse is over description
-    //--------------------------------
-
-    _isOverDescription: function(descriptionText) {
-        if (!descriptionText) return false;
-
-        // Get the description text's world position
-        var worldX = descriptionText.x;
-        var worldY = descriptionText.y;
-        var parent = descriptionText.parent;
-
-        while (parent && parent !== SceneManager._scene) {
-            worldX += parent.x || 0;
-            worldY += parent.y || 0;
-            parent = parent.parent;
-        }
-
-        var width = descriptionText._width || 288;
-        var height = descriptionText._height || 160;
-
-        return this._x >= worldX && this._x <= worldX + width &&
-            this._y >= worldY && this._y <= worldY + height;
-    },
-
-    //--------------------------------
-    // Helper: Scroll description text
-    //--------------------------------
-
-    _scrollDescription: function(descriptionText, delta) {
-        if (!descriptionText || typeof descriptionText.scroll !== 'function') {
-            return false;
-        }
-
-        var scrollAmount = delta * 20; // Scroll 20px per wheel tick
-        descriptionText.scroll(scrollAmount);
-
-        // Return true if the text can scroll (has content to scroll)
-        return descriptionText.canScroll ? descriptionText.canScroll() : true;
-    },
-
-    //--------------------------------
-    // Public API
-    //--------------------------------
-
-    x: function() { return this._x; },
-    y: function() { return this._y; },
-    position: function() { return { x: this._x, y: this._y }; },
-    getHoveredElement: function() { return this._hoveredElement; },
-
-    isTriggered: function(button) { return TouchInput.isTriggered(); },
-    isPressed: function(button) { return TouchInput.isPressed(); },
-    isReleased: function(button) { return TouchInput.isReleased(); },
-    isRepeated: function(button) { return TouchInput.isRepeated(); },
-
-    update: function() {
-        if (this._isDragging && this._draggedElement) {
-            this._processDrag();
-        }
-    }
-};
-
-// Auto-initialize
-LOGICPULSE.Mouse.initialize();
 
 
 //=============================================================================
@@ -4139,930 +2914,6 @@ LOGICPULSE.CraftManager = {
 
 
 //=============================================================================
-// LPAnimator.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-
-//=============================================================================
-// Animator
-//=============================================================================
-
-LOGICPULSE.Animator = {
-
-    _animations: [],
-
-    //--------------------------------
-    // Update
-    //--------------------------------
-
-    update() {
-
-        for (let i = this._animations.length - 1; i >= 0; i--) {
-
-            const animation = this._animations[i];
-
-            if (!animation.target || animation.target.destroyed) {
-
-                this._animations.splice(i, 1);
-
-                continue;
-
-            }
-
-            switch (animation.type) {
-
-                case "pulse":
-
-                    this.updatePulse(animation);
-
-                    break;
-
-                case "bitmapSwap":
-
-                    this.updateBitmapSwap(animation);
-
-                    break;
-
-            }
-
-        }
-
-    },
-
-    //--------------------------------
-    // Pulse
-    //--------------------------------
-
-    pulse(target, options = {}) {
-
-        if (!target) {
-
-            return;
-
-        }
-
-        const existing = this._animations.find(
-
-            animation =>
-
-                animation.target === target &&
-                animation.type === "pulse"
-
-        );
-
-        if (existing) {
-
-            return;
-
-        }
-
-        target.alpha = options.max ?? 1.0;
-
-        this._animations.push({
-
-            type: "pulse",
-
-            target: target,
-
-            min: options.min ?? 0.35,
-
-            max: options.max ?? 1.0,
-
-            speed: options.speed ?? 0.02,
-
-            direction: -1
-
-        });
-
-    },
-
-    //--------------------------------
-    // Bitmap Swap
-    //--------------------------------
-
-    bitmapSwap(target, folder, frames, options = {}) {
-
-        if (!target) {
-
-            return;
-
-        }
-
-        if (!frames || frames.length < 2) {
-
-            return;
-
-        }
-
-        const existing = this._animations.find(
-
-            animation =>
-
-                animation.target === target &&
-                animation.type === "bitmapSwap"
-
-        );
-
-        if (existing) {
-
-            return;
-
-        }
-
-        target.bitmap = LOGICPULSE.Assets.load(
-
-            folder,
-
-            frames[0]
-
-        );
-
-        this._animations.push({
-
-            type: "bitmapSwap",
-
-            target: target,
-
-            folder: folder,
-
-            frames: frames,
-
-            frameIndex: 0,
-
-            timer: 0,
-
-            interval: options.interval ?? 30
-
-        });
-
-    },
-
-    //--------------------------------
-    // Stop
-    //--------------------------------
-
-    stop(target) {
-
-        this._animations = this._animations.filter(
-
-            animation => animation.target !== target
-
-        );
-
-        if (!target) {
-
-            return;
-
-        }
-
-        target.alpha = 1.0;
-
-    },
-
-    //--------------------------------
-    // Clear
-    //--------------------------------
-
-    clear() {
-
-        for (const animation of this._animations) {
-
-            if (animation.target) {
-
-                animation.target.alpha = 1.0;
-
-            }
-
-        }
-
-        this._animations = [];
-
-    },
-
-    //--------------------------------
-    // Pulse Update
-    //--------------------------------
-
-    updatePulse(animation) {
-
-        animation.target.alpha +=
-
-            animation.speed * animation.direction;
-
-        if (animation.target.alpha <= animation.min) {
-
-            animation.target.alpha = animation.min;
-
-            animation.direction = 1;
-
-        }
-
-        else if (animation.target.alpha >= animation.max) {
-
-            animation.target.alpha = animation.max;
-
-            animation.direction = -1;
-
-        }
-
-    },
-
-    //--------------------------------
-    // Bitmap Swap Update
-    //--------------------------------
-
-    updateBitmapSwap(animation) {
-
-        animation.timer++;
-
-        if (animation.timer < animation.interval) {
-
-            return;
-
-        }
-
-        animation.timer = 0;
-
-        animation.frameIndex++;
-
-        if (animation.frameIndex >= animation.frames.length) {
-
-            animation.frameIndex = 0;
-
-        }
-
-        animation.target.bitmap = LOGICPULSE.Assets.load(
-
-            animation.folder,
-
-            animation.frames[animation.frameIndex]
-
-        );
-
-    },
-
-};
-
-//=============================================================================
-// Scene Hook
-//=============================================================================
-
-(() => {
-
-    const aliasUpdate = Scene_Base.prototype.update;
-
-    Scene_Base.prototype.update = function() {
-
-        aliasUpdate.call(this);
-
-        LOGICPULSE.Animator.update();
-
-    };
-
-})();
-
-
-//=============================================================================
-// LPUIElement.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-LOGICPULSE.UI = LOGICPULSE.UI || {};
-
-//=============================================================================
-// Base UI Element
-//=============================================================================
-
-LOGICPULSE.UI.Element = class extends PIXI.Container {
-
-    constructor() {
-
-        super();
-
-        this._enabled = true;
-
-    }
-
-    //--------------------------------
-    // Create
-    //--------------------------------
-
-    create() {
-
-    }
-
-    //--------------------------------
-    // Refresh
-    //--------------------------------
-
-    refresh() {
-
-    }
-
-    //--------------------------------
-    // Update
-    //--------------------------------
-
-    update() {
-
-    }
-
-    //--------------------------------
-    // Visibility
-    //--------------------------------
-
-    show() {
-
-        this.visible = true;
-
-    }
-
-    hide() {
-
-        this.visible = false;
-
-    }
-
-    move(x, y) {
-
-        this.position.set(x, y);
-
-    }
-
-    //--------------------------------
-    // Sprite Helper
-    //--------------------------------
-
-    createSprite(folder, filename, x = 0, y = 0) {
-
-        const sprite = LOGICPULSE.Assets.createSprite(
-
-            folder,
-            filename
-
-        );
-
-        sprite.position.set(x, y);
-
-        this.addChild(sprite);
-
-        return sprite;
-
-    }
-
-
-    //--------------------------------
-    // Text Helper
-    //--------------------------------
-
-    createText(options = {}) {
-
-        const text = new LOGICPULSE.UI.Text(options);
-
-        this.addChild(text);
-
-        return text;
-
-    }
-
-    //--------------------------------
-    // State
-    //--------------------------------
-
-    enable() {
-
-        this._enabled = true;
-
-    }
-
-    disable() {
-
-        this._enabled = false;
-
-    }
-
-    get enabled() {
-
-        return this._enabled;
-
-    }
-
-    //--------------------------------
-    // Destroy
-    //--------------------------------
-
-    destroy(options = { children: true }) {
-
-        const children = this.removeChildren();
-
-        for (const child of children) {
-
-            if (child.destroy) {
-
-                child.destroy();
-
-            }
-
-        }
-
-        super.destroy(options);
-
-    }
-
-};
-
-
-//=============================================================================
-// LPText.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-LOGICPULSE.UI = LOGICPULSE.UI || {};
-
-//=============================================================================
-// Text
-//=============================================================================
-
-LOGICPULSE.UI.Text = class extends Sprite {
-
-    constructor(options = {}) {
-
-        super();
-
-        this._width = options.width ?? 100;
-        this._height = options.height ?? 32;
-
-        this.bitmap = new Bitmap(
-            this._width,
-            this._height
-        );
-
-        this.bitmap.fontFace =
-            options.fontFace ?? $gameSystem.mainFontFace();
-
-        this.bitmap.fontSize =
-            options.fontSize ?? 20;
-
-        this.bitmap.textColor =
-            options.textColor ?? "#FFFFFF";
-
-        this.bitmap.outlineColor =
-            options.outlineColor ?? "rgba(0,0,0,0.8)";
-
-        this.bitmap.outlineWidth =
-            options.outlineWidth ?? 4;
-
-        this._align =
-            options.align ?? "left";
-
-        this._padding =
-            options.padding ?? 0;
-
-        this._lineHeight =
-            options.lineHeight ??
-            (this.bitmap.fontSize + 6);
-
-        this.move(
-            options.x ?? 0,
-            options.y ?? 0
-        );
-
-        this.setText(
-            options.text ?? ""
-        );
-
-    }
-
-    //--------------------------------
-    // Set Text
-    //--------------------------------
-
-    setText(text) {
-
-        text = String(text);
-
-        if (this._text === text) {
-
-            return;
-
-        }
-
-        this._text = text;
-
-        this.refresh();
-
-    }
-
-    //--------------------------------
-    // Refresh
-    //--------------------------------
-
-    refresh() {
-
-        this.bitmap.clear();
-
-        const lines = this.wrapText(this._text);
-
-        let y = this._padding;
-
-        for (const line of lines) {
-
-            this.bitmap.drawText(
-
-                line,
-
-                this._padding,
-
-                y,
-
-                this._width - this._padding * 2,
-
-                this._lineHeight,
-
-                this._align
-
-            );
-
-            y += this._lineHeight;
-
-        }
-
-    }
-
-    //--------------------------------
-    // Word Wrap
-    //--------------------------------
-
-    wrapText(text) {
-
-        if (!text) {
-
-            return [];
-
-        }
-
-        const maxWidth =
-            this._width - this._padding * 2;
-
-        const words = text.split(" ");
-
-        const lines = [];
-
-        let line = "";
-
-        for (const word of words) {
-
-            const test =
-                line ? line + " " + word : word;
-
-            const width =
-                this.bitmap.measureTextWidth(test);
-
-            if (
-
-                width > maxWidth &&
-                line.length > 0
-
-            ) {
-
-                lines.push(line);
-
-                line = word;
-
-            }
-
-            else {
-
-                line = test;
-
-            }
-
-        }
-
-        if (line.length > 0) {
-
-            lines.push(line);
-
-        }
-
-        return lines;
-
-    }
-
-    //--------------------------------
-    // Text
-    //--------------------------------
-
-    text() {
-
-        return this._text;
-
-    }
-
-};
-
-
-//=============================================================================
-// LPScrollText.js
-//=============================================================================
-
-window.LOGICPULSE = window.LOGICPULSE || {};
-LOGICPULSE.UI = LOGICPULSE.UI || {};
-
-//=============================================================================
-// Scroll Text
-//=============================================================================
-
-LOGICPULSE.UI.ScrollText = class extends LOGICPULSE.UI.Element {
-
-    constructor(options = {}) {
-
-        super();
-
-        this._width =
-            options.width ?? 200;
-
-        this._height =
-            options.height ?? 100;
-
-        this._padding =
-            options.padding ?? 0;
-
-        this._lineHeight =
-            options.lineHeight ?? 28;
-
-        this._fontSize =
-            options.fontSize ?? 20;
-
-        this._scroll = 0;
-
-        this._maxScroll = 0;
-
-        this._contentHeight = 0;
-
-        this.move(
-
-            options.x ?? 0,
-            options.y ?? 0
-
-        );
-
-        this.create();
-
-    }
-
-    //--------------------------------
-    // Create
-    //--------------------------------
-
-    create() {
-
-        this.createMask();
-        this.createText();
-
-    }
-
-    //--------------------------------
-    // Mask
-    //--------------------------------
-
-    createMask() {
-
-        this._maskGraphic = new PIXI.Graphics();
-
-        this._maskGraphic.beginFill(0xffffff);
-
-        this._maskGraphic.drawRect(
-
-            0,
-            0,
-            this._width,
-            this._height
-
-        );
-
-        this._maskGraphic.endFill();
-
-        this.addChild(
-
-            this._maskGraphic
-
-        );
-
-    }
-
-    //--------------------------------
-    // Text
-    //--------------------------------
-
-    createText() {
-
-        this._textSprite = new Sprite();
-
-        this._textSprite.bitmap = new Bitmap(
-
-            this._width,
-            2000
-
-        );
-
-        this._textSprite.bitmap.fontFace =
-            $gameSystem.mainFontFace();
-
-        this._textSprite.bitmap.fontSize =
-            this._fontSize;
-
-        this._textSprite.bitmap.outlineWidth = 4;
-
-        this._textSprite.bitmap.outlineColor =
-            "rgba(0,0,0,0.8)";
-
-        this._textSprite.mask =
-            this._maskGraphic;
-
-        this.addChild(
-
-            this._textSprite
-
-        );
-
-    }
-
-    //--------------------------------
-    // Set Text
-    //--------------------------------
-
-    setText(text) {
-
-        text = String(text ?? "");
-
-        this._textSprite.bitmap.clear();
-
-        this.drawWrappedText(text);
-
-        this.resetScroll();
-
-    }
-
-    //--------------------------------
-    // Draw Wrapped Text
-    //--------------------------------
-
-    drawWrappedText(text) {
-
-        const bitmap =
-            this._textSprite.bitmap;
-
-        const maxWidth =
-            this._width - this._padding * 2;
-
-        const words =
-            text.split(/\s+/);
-
-        let line = "";
-
-        let y = 0;
-
-        for (const word of words) {
-
-            const test =
-
-                line.length
-                    ? line + " " + word
-                    : word;
-
-            const width =
-                bitmap.measureTextWidth(test);
-
-            if (
-
-                width > maxWidth &&
-
-                line.length
-
-            ) {
-
-                bitmap.drawText(
-
-                    line,
-
-                    this._padding,
-
-                    y,
-
-                    maxWidth,
-
-                    this._lineHeight,
-
-                    "left"
-
-                );
-
-                line = word;
-
-                y += this._lineHeight;
-
-            }
-
-            else {
-
-                line = test;
-
-            }
-
-        }
-
-        if (line.length) {
-
-            bitmap.drawText(
-
-                line,
-
-                this._padding,
-
-                y,
-
-                maxWidth,
-
-                this._lineHeight,
-
-                "left"
-
-            );
-
-            y += this._lineHeight;
-
-        }
-
-        this._contentHeight = y;
-
-        this._maxScroll = Math.max(
-
-            0,
-
-            this._contentHeight - this._height
-
-        );
-
-    }
-
-    //--------------------------------
-    // Scroll
-    //--------------------------------
-
-    scroll(amount) {
-
-        if (this._maxScroll <= 0) {
-
-            return;
-
-        }
-
-        this._scroll += amount;
-
-        if (this._scroll < 0) {
-
-            this._scroll = 0;
-
-        }
-
-        if (this._scroll > this._maxScroll) {
-
-            this._scroll = this._maxScroll;
-
-        }
-
-        this._textSprite.y = -this._scroll;
-
-    }
-
-    //--------------------------------
-    // Can Scroll
-    //--------------------------------
-
-    canScroll() {
-
-        return this._maxScroll > 0;
-
-    }
-
-    //--------------------------------
-    // Reset Scroll
-    //--------------------------------
-
-    resetScroll() {
-
-        this._scroll = 0;
-
-        this._textSprite.y = 0;
-
-    }
-
-};
-
-
-//=============================================================================
 // LPGridSlot.js
 //=============================================================================
 
@@ -5073,7 +2924,7 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Grid Slot
 //=============================================================================
 
-LOGICPULSE.UI.GridSlot = class extends LOGICPULSE.UI.Element {
+LOGICPULSE.UI.InventoryGridSlot = class extends LOGICPULSE.UI.Element {
 
     constructor(options = {}) {
 
@@ -5880,9 +3731,10 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Grid
 //=============================================================================
 
-LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
+LOGICPULSE.UI.InventoryGrid = class extends LOGICPULSE.UI.Element {
 
     constructor(layout, options = {}) {
+        console.log('InventoryGrid layout:', layout);
 
         super();
 
@@ -6047,7 +3899,7 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
             const position = this.slotPosition(index);
 
-            const slot = new LOGICPULSE.UI.GridSlot({
+            const slot = new LOGICPULSE.UI.InventoryGridSlot({
 
                 x: position.x,
 
@@ -6457,159 +4309,104 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Synthesizer Grid Slot
 //=============================================================================
 
-LOGICPULSE.UI.SynthesizerGridSlot = class extends LOGICPULSE.UI.GridSlot {
-
-    //--------------------------------
-    // Initialize
-    //--------------------------------
+LOGICPULSE.UI.SynthesizerGridSlot = class extends LOGICPULSE.UI.InventoryGridSlot {
 
     constructor(options = {}) {
-
         super(options);
-
+        this._lastClickTime = null; // for double-click detection
     }
-
-    //--------------------------------
-    // Create
-    //--------------------------------
 
     create() {
-
         super.create();
-
         this.createSelectedFrame();
-
         this.refreshCraftState();
-
     }
-
-    //--------------------------------
-    // Selected Frame (Craft Marker)
-    //--------------------------------
 
     createSelectedFrame() {
-
         this._selectedFrame = new Sprite(
-
             LOGICPULSE.Assets.load(
-
                 LOGICPULSE.Assets.Folders.Synthesizer,
-
                 LOGICPULSE.Assets.Images.Synthesizer.SelectedFrame
-
             )
-
         );
-
         this._selectedFrame.visible = false;
-
-        // Keep it behind the selection cursor
         this.addChildAt(this._selectedFrame, 0);
-
     }
-
-    //--------------------------------
-    // Craft Selected
-    //--------------------------------
 
     setCraftSelected(selected) {
-
         this._craftSelected = selected;
-
         if (this._selectedFrame) {
-
             this._selectedFrame.visible = selected;
-
         }
-
         this.updateSelection();
-
     }
-
-    //--------------------------------
-    // Selection Frame Asset (Cursor)
-    //--------------------------------
 
     selectionFrameAsset() {
-
         return {
-
-            folder:
-
-            LOGICPULSE.Assets.Folders.Synthesizer,
-
-            image:
-
-            LOGICPULSE.Assets.Images.Synthesizer.SelectionFrame
-
+            folder: LOGICPULSE.Assets.Folders.Synthesizer,
+            image: LOGICPULSE.Assets.Images.Synthesizer.SelectionFrame
         };
-
     }
-
-    //--------------------------------
-    // Refresh Craft State
-    //--------------------------------
 
     refreshCraftState() {
-
-        const craftable =
-
-            LOGICPULSE.RecipeManager.canCraft(
-
-                this.item()
-
-            );
-
-        this.setLocked(
-
-            !craftable
-
-        );
-
-        this.applyDisabledStyle(
-
-            !craftable
-
-        );
-
+        const craftable = LOGICPULSE.RecipeManager.canCraft(this.item());
+        this.setLocked(!craftable);
+        this.applyDisabledStyle(!craftable);
     }
-
-    //--------------------------------
-    // Disabled Style
-    //--------------------------------
 
     applyDisabledStyle(disabled) {
-
-        const alpha =
-
-            disabled ? 0.45 : 1.0;
-
-        const tint =
-
-            disabled ? 0x808080 : 0xFFFFFF;
-
+        const alpha = disabled ? 0.45 : 1.0;
+        const tint = disabled ? 0x808080 : 0xFFFFFF;
         if (this._background) {
-
             this._background.alpha = alpha;
             this._background.tint = tint;
-
         }
-
         if (this._icon) {
-
             this._icon.alpha = alpha;
             this._icon.tint = tint;
-
         }
-
         if (this._amountText) {
-
             this._amountText.alpha = alpha;
-
         }
-
     }
 
+    // ============================================================
+    //  Override _onMouseUp to detect double-click
+    // ============================================================
+    _onMouseUp(button, x, y) {
+        if (this._isDestroyed || this.destroyed) return;
+        if (!this._isMouseDown) return;
+        this._isMouseDown = false;
+        if (this._background) this._background.alpha = 1.0;
+
+        if (this._isDragging) {
+            this._onDragEnd(x, y);
+            this._isDragging = false;
+            return;
+        }
+
+        const dx = x - this._mouseDownX;
+        const dy = y - this._mouseDownY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 5) {
+            const now = Date.now();
+            if (this._lastClickTime && (now - this._lastClickTime) < 300) {
+                // Double-click detected!
+                this._lastClickTime = null;
+
+                // Trigger craft mode via the controller
+                const scene = SceneManager._scene;
+                if (scene && scene._controller && typeof scene._controller.onConfirm === 'function') {
+                    scene._controller.onConfirm();
+                }
+                return; // Don't fire single-click
+            } else {
+                this._lastClickTime = now;
+                this._triggerEvent('click', [button, x, y]);
+            }
+        }
+    }
 };
 
 
@@ -6624,7 +4421,7 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Synthesizer Grid
 //=============================================================================
 
-LOGICPULSE.UI.SynthesizerGrid = class extends LOGICPULSE.UI.Grid {
+LOGICPULSE.UI.SynthesizerGrid = class extends LOGICPULSE.UI.InventoryGrid {
 
 
     //--------------------------------
@@ -8626,7 +6423,7 @@ LOGICPULSE.Scenes.Inventory = class extends Scene_MenuBase {
     }
 
     createGrid() {
-        this._grid = new LOGICPULSE.UI.Grid(
+        this._grid = new LOGICPULSE.UI.InventoryGrid(
             LOGICPULSE.Layout.Inventory.Grid,
             {
                 provider: grid => LOGICPULSE.InventoryProvider.getItems(grid.category())
@@ -8709,6 +6506,7 @@ LOGICPULSE.Scenes.Synthesizer = class extends Scene_MenuBase {
         super.initialize();
         this._selectedItem = null;
         this._lastSelectedIndex = -1;
+        this._lastClickTime = null
     }
 
     create() {
@@ -8846,20 +6644,51 @@ LOGICPULSE.Scenes.Synthesizer = class extends Scene_MenuBase {
     update() {
         super.update();
 
+        // ---- CLICK DETECTION (before Mouse consumes trigger) ----
+        if (TouchInput.isTriggered()) {
+            const x = TouchInput.x;
+            const y = TouchInput.y;
+            const grid = this._craftGrid;
+            if (grid) {
+                const slot = grid.getSlotAt(x, y);
+                if (slot && slot.entry() && LOGICPULSE.RecipeManager.canCraft(slot.entry().item)) {
+                    const currentIndex = grid.selectedIndex();
+                    const slotIndex = grid._slots.indexOf(slot);
+                    if (slotIndex === currentIndex) {
+                        // Clicked on the already selected slot → enter craft mode
+                        if (this._controller) {
+                            this._controller.onConfirm();
+                        }
+                    } else {
+                        // Clicked on a different slot → select it
+                        grid.setSelectedIndex(slotIndex);
+                        if (this._controller) {
+                            this._controller.onSelectionChanged();
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- MOUSE MANAGER ----
         LOGICPULSE.Mouse.update();
 
+        // ---- SIDEBAR ----
         if (this._sidebar && typeof this._sidebar.processMouseInput === 'function') {
             this._sidebar.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- QUANTITY CONTROLLER ----
         if (this._quantityController && typeof this._quantityController.processMouseInput === 'function') {
             this._quantityController.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- CRAFT BUTTON ----
         if (this._craftButton && typeof this._craftButton.processMouseInput === 'function') {
             this._craftButton.processMouseInput(LOGICPULSE.Mouse.x(), LOGICPULSE.Mouse.y());
         }
 
+        // ---- CONTROLLERS ----
         if (this._controller) this._controller.update();
         if (this._craftGrid) this._craftGrid.update();
         if (this._sidebar) this._sidebar.update();
@@ -8876,12 +6705,11 @@ LOGICPULSE.Scenes.Synthesizer = class extends Scene_MenuBase {
 // Main.js
 //=============================================================================
 
-window.LOGICPULSE = window.LOGICPULSE || {};
+if (!LOGICPULSE.CoreVersion) {
+    throw new Error("LOGICPULSE_Core is required for this plugin.");
+}
 
-// Initialize assets
-LOGICPULSE.Assets.initialize();
-
-// Initialize parameters (after Layout is loaded)
+// Initialize parameters (core already loaded system assets)
 if (LOGICPULSE.Parameters && typeof LOGICPULSE.Parameters.initialize === 'function') {
     LOGICPULSE.Parameters.initialize();
 }

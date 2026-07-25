@@ -7,9 +7,10 @@ LOGICPULSE.UI = LOGICPULSE.UI || {};
 // Grid
 //=============================================================================
 
-LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
+LOGICPULSE.UI.InventoryGrid = class extends LOGICPULSE.UI.Element {
 
     constructor(layout, options = {}) {
+        console.log('InventoryGrid layout:', layout);
 
         super();
 
@@ -174,7 +175,7 @@ LOGICPULSE.UI.Grid = class extends LOGICPULSE.UI.Element {
 
             const position = this.slotPosition(index);
 
-            const slot = new LOGICPULSE.UI.GridSlot({
+            const slot = new LOGICPULSE.UI.InventoryGridSlot({
 
                 x: position.x,
 

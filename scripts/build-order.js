@@ -10,9 +10,7 @@ module.exports = [
     "src/managers/LPAssets.js",
     "src/managers/LPParameters.js",
     "src/managers/LPLayout.js",
-    "src/managers/LPInput.js",
     "src/managers/LPBindings.js",
-    "src/managers/LPMouse.js",
 
     // Managers (continued)
     "src/managers/LPInventoryProvider.js",
@@ -21,12 +19,9 @@ module.exports = [
     "src/managers/LPGamePartyHooks.js",
     "src/managers/LPRecipeManager.js",
     "src/managers/LPCraftManager.js",
-    "src/managers/LPAnimator.js",
 
     // UI
-    "src/ui/LPUIElement.js",
-    "src/ui/LPText.js",
-    "src/ui/LPScrollText.js",
+
     "src/ui/LPGridSlot.js",
     "src/ui/LPGrid.js",
     "src/ui/LPSynthesizerGridSlot.js",

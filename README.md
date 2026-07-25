@@ -78,11 +78,13 @@ This means the item requires **2 of item ID 10** and **1 of item ID 15** to craf
 ------------------------------------------------------------------
 
 ## 📦 Installation
-
-1. Download the latest release `.zip` file.
-2. Place it in your project’s `Main` folder.
-3. In RPG Maker MZ, open the **Plugin Manager** and add the plugin.
-4. Use the plugin command `OpenInventory` to launch the inventory scene (e.g., from a menu or event).
+1. Download and Place LOGICPULSE_Core plugin above this plugin in Plugin Manager.
+2. Download the latest release `.zip` file.
+3. Place it in your project’s `Main` folder.
+4. In RPG Maker MZ, open the **Plugin Manager** and add the plugin.
+5. Ensure the image assets are placed in the correct folder (see **Assets** above).
+6. Enable the plugin and save your project.
+7. Use the plugin command `OpenInventory` to launch the inventory scene (e.g., from a menu or event).
 
 ------------------------------------------------------------------
 
@@ -98,20 +100,14 @@ src/
 ├── managers/
 │ ├── LPAssets.js – Image loading and caching.
 │ ├── LPLayout.js – UI layout coordinates (positions, sizes).
-│ ├── LPInput.js – Keyboard input wrapper.
 │ ├── LPBindings.js – Key mappings for navigation.
-│ ├── LPMouse.js – Mouse input handler (TouchInput based).
 │ ├── LPInventoryProvider.js – Manages item data from party inventory.
 │ ├── LPInventoryController.js – Controls inventory scene logic (navigation, use).
 │ ├── LPSynthesizerController.js – Controls synthesizer scene logic (craft, quantity).
 │ ├── LPGamePartyHooks.js – Hooks to auto‑refresh inventory on item changes.
 │ ├── LPRecipeManager.js – Parses and caches recipes from item notes.
-│ ├── LPCraftManager.js – Executes crafting (material removal, item gain).
-│ └── LPAnimator.js – UI animations (pulse, bitmap swap).
+│ └── LPCraftManager.js – Executes crafting (material removal, item gain).
 ├── ui/
-│ ├── LPUIElement.js – Base class for all UI elements.
-│ ├── LPText.js – Multi‑line text with word wrap.
-│ ├── LPScrollText.js – Scrollable text block.
 │ ├── LPGridSlot.js – Individual inventory slot (item, amount, hover).
 │ ├── LPGrid.js – Inventory grid (layout, selection, scroll).
 │ ├── LPSynthesizerGridSlot.js – Synthesizer slot with craft state.
